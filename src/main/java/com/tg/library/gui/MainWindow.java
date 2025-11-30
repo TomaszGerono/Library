@@ -74,6 +74,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jMenu3.setText("Search");
 
@@ -121,11 +122,11 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 436, Short.MAX_VALUE)
+            .addGap(0, 587, Short.MAX_VALUE)
         );
 
         pack();
@@ -136,7 +137,7 @@ public class MainWindow extends javax.swing.JFrame {
         
         // Show the book search window
          EventQueue.invokeLater(() -> {
-            new bookSearchJFrame().setVisible(true);
+            new BookSearchJFrame().setVisible(true);
         });
         
 

@@ -15,7 +15,7 @@ import java.util.LinkedList;
  *
  * @author Tomasz
  */
-public class bookFinder {
+public class BookFinder {
     
     private Statement statement;
     
