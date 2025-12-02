@@ -20,4 +20,5 @@ public class MyBcrypt {
     public static boolean verifyPassword(String plaintext, String hashed) {
         return BCrypt.checkpw(plaintext, hashed);
     }
-}
+
+} 

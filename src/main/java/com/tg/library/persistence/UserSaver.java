@@ -41,11 +41,14 @@ public class UserSaver {
             pstat.setString(3, values.get(2).toString());
             pstat.setInt(4, (int) values.get(3));
             pstat.executeUpdate();
+            System.out.println("User registered!");
         }
         
         catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+        
+        
     
     }
     

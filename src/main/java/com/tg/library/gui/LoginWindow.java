@@ -1,7 +1,8 @@
 package com.tg.library.gui;
 
-import java.awt.EventQueue;
 
+import java.awt.EventQueue;
+import com.tg.library.persistence.passwdComparer;
 /**
  *
  * @author tomasz
@@ -50,7 +51,7 @@ public class LoginWindow extends javax.swing.JFrame {
         jButton1.setText("Log in");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                loginButtonActionPerformed(evt);
             }
         });
 
@@ -109,17 +110,34 @@ public class LoginWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
         
-        // Show the main window
-         EventQueue.invokeLater(() -> {
-            new MainWindow().setVisible(true);
-        });
-         
-         // Close the login window
-         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String inputLogin = jTextField1.getText();
+        
+        String inputPasswd = jPasswordField1.getText();
+        
+        if (com.tg.library.persistence.passwdComparer.comparePasswords(inputLogin, inputPasswd)) {
+        
+            EventQueue.invokeLater(() -> {
+                new MainWindow().setVisible(true);
+            });
+        
+            // Close the login window
+            this.dispose();
+            
+        } 
+        
+        else {
+        
+            // Create a popup window or textLable saying this
+            System.out.println("Wrong password or login !");
+            
+            
+        }
+        
+       
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:

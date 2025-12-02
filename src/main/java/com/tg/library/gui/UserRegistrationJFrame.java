@@ -5,7 +5,7 @@
 package com.tg.library.gui;
 
 
-import com.tg.library.Crypt;
+import com.tg.library.MyBcrypt;
 import com.tg.library.persistence.UserSaver;
 
 /**
@@ -63,8 +63,6 @@ public class UserRegistrationJFrame extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField1.setText("jPasswordField1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,11 +113,11 @@ public class UserRegistrationJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         var login = jTextField1.getText();
-        var hashedPassword = Crypt.hashPassword(jPasswordField1.getText());
-        
+        var plaintextPasswd = jPasswordField1.getText();
+//        var hashedPassword = Crypt.hashPassword(jPasswordField1.getText());
+        var hashedPassword = MyBcrypt.hashPassword(plaintextPasswd);
         UserSaver.saveUser(login, hashedPassword);
-        
-        
+        this.dispose();
     }//GEN-LAST:event_registerButtonActionPerformed
 
     /**
