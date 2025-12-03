@@ -140,7 +140,7 @@ public class LoginWindow extends javax.swing.JFrame {
         
             
             EventQueue.invokeLater(() -> {
-                new MainWindow().setVisible(true);
+                new MainWindow(inputLogin).setVisible(true);
             });
         
             // Close the login window
@@ -149,6 +149,8 @@ public class LoginWindow extends javax.swing.JFrame {
         } 
         
         else { errorJLabel.setText("Wrong password!"); }
+        
+        
         
        
     }//GEN-LAST:event_loginJButtonActionPerformed
