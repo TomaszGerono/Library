@@ -19,9 +19,6 @@ public class Library {
         EventQueue.invokeLater(() -> {
             new LoginWindow().setVisible(true);
         });
-        
-        // Run the DB connection in a separate thread
-//        new Thread(() -> connect(url)).start();
     }
     
     public static void startGUI() {
