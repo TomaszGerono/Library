@@ -4,7 +4,10 @@
  */
 package com.tg.library.gui;
 
+import com.tg.library.Config;
+import com.tg.library.Library;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import javax.swing.*;
 
 /**
@@ -21,6 +24,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Config.get_icon_filepath())));
     }
 
     /**
@@ -41,7 +45,10 @@ public class MainWindow extends javax.swing.JFrame {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jPopupMenu3 = new javax.swing.JPopupMenu();
         jFrame1 = new javax.swing.JFrame();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu6 = new javax.swing.JMenu();
+        logoutMenuItem = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -73,8 +80,22 @@ public class MainWindow extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        jMenuItem9.setText("jMenuItem9");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        jMenu6.setText("App");
+
+        logoutMenuItem.setText("Log out");
+        logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu6.add(logoutMenuItem);
+
+        jMenuBar1.add(jMenu6);
 
         jMenu3.setText("Search");
 
@@ -148,6 +169,12 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3KeyPressed
 
+    private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Library.main(new String[]{});
+    }//GEN-LAST:event_logoutMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -180,6 +207,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -190,8 +218,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;
+    private javax.swing.JMenuItem logoutMenuItem;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,9 @@
  */
 package com.tg.library.gui;
 
+import com.tg.library.Config;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Tomasz
@@ -18,6 +21,7 @@ public class BookSearchJFrame extends javax.swing.JFrame {
     public BookSearchJFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(Config.get_icon_filepath())));
     }
 
     /**

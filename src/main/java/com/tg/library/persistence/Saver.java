@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import com.tg.library.Config;
+
 
 /**
  *
@@ -15,7 +17,9 @@ import java.util.ArrayList;
  */
 public class Saver {
     
-        public static void saveUser(String login, String passwordHash) {
+    
+    
+        public static String saveUser(String login, String passwordHash) {
         
         
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -27,23 +31,26 @@ public class Saver {
         values.add(stringCurrentDateTime);
         values.add(Integer.valueOf(1));
         
-        
-        String url = "jdbc:sqlite:./sqlite/db/users.db";
         String sql = "INSERT INTO users(login, passwordHash, dateCreated, isActive) VALUES (?,?,?,?)";
         
         try {
-            var conn = DriverManager.getConnection(url);
+            var conn = DriverManager.getConnection(Config.get_users_db_url());
             var pstat = conn.prepareStatement(sql);
             pstat.setString(1, values.get(0).toString());
             pstat.setString(2, values.get(1).toString());
             pstat.setString(3, values.get(2).toString());
             pstat.setInt(4, (int) values.get(3));
             pstat.executeUpdate();
-            System.out.println("User registered!");
+            
+            return "success";
         }
         
         catch (SQLException e) {
             System.err.println(e.getMessage());
+            
+            return "failed";
+            
+            // Show the user "login already used by someone else" error
         }
     
     
