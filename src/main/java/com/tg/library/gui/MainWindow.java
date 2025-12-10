@@ -116,6 +116,11 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu3.add(jMenuItem3);
 
         jMenuItem4.setText("Author");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem4);
 
         jMenuItem5.setText("Publisher");
@@ -180,6 +185,16 @@ public class MainWindow extends javax.swing.JFrame {
         this.dispose();
         Library.main(new String[]{});
     }//GEN-LAST:event_logoutMenuItemActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        
+            // Show the author search window
+            EventQueue.invokeLater(() -> {
+            new AuthorSearchJFrame().setVisible(true);
+        });
+        
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments

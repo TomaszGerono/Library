@@ -17,8 +17,7 @@ import com.tg.library.persistence.AuthorVO;
  * @author tomasz
  */
 public class Finder {
-    
-    
+   
             /**
              * Queries the DB for all authors which match given arguments. 
              * If the user left a text field blank Swing's getText() method returns an
@@ -98,6 +97,8 @@ public class Finder {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            
+            return null;
     }
     
 }

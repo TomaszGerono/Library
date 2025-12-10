@@ -50,14 +50,14 @@ public class Saver {
         }
     }
         
-    public static List<Book> saveBook(String title, String alternateTitle, String genre, String section, String series, String topic) {
-        
-        
-        try (var conn = DriverManager.getConnection(Config.get_library_db_url())) {
-            var pstat = conn.prepareStatement(sql);
-            pstat.executeUpdate();
-
-        } catch (SQLException e) { System.err.println(e.getMessage());  }
-    }
+//    public static List<Book> saveBook(String title, String alternateTitle, String genre, String section, String series, String topic) {
+//        
+//        
+//        try (var conn = DriverManager.getConnection(Config.get_library_db_url())) {
+//            var pstat = conn.prepareStatement(sql);
+//            pstat.executeUpdate();
+//
+//        } catch (SQLException e) { System.err.println(e.getMessage());  }
+//    }
 
 }
