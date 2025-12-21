@@ -13,7 +13,7 @@ public class Book {
     private int publisherID;
     private int genreID;
     private int sectionID;
-    private MainCharacter mainCharacter;
+    private String mainCharacter;
     private int seriesID;
     private int topicID;
 
@@ -22,6 +22,11 @@ public class Book {
         this.title = title;
         this.authorID = authorID;
     }
+
+    public Book() {
+    }
+    
+    
     
     
 
@@ -81,11 +86,11 @@ public class Book {
         this.sectionID = sectionID;
     }
 
-    public MainCharacter getMainCharacter() {
+    public String getMainCharacter() {
         return mainCharacter;
     }
 
-    public void setMainCharacter(MainCharacter mainCharacter) {
+    public void setMainCharacter(String mainCharacter) {
         this.mainCharacter = mainCharacter;
     }
 

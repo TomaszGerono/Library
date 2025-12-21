@@ -1,9 +1,13 @@
 package com.tg.library.gui;
 
-import com.tg.library.Config;
 import java.awt.Toolkit;
 import java.awt.EventQueue;
+
 import com.tg.library.persistence.passwdComparer;
+import com.tg.library.Config;
+import com.tg.library.persistence.Finder;
+
+
 /**
  *
  * @author tomasz
@@ -134,21 +138,25 @@ public class LoginWindow extends javax.swing.JFrame {
         
         String inputLogin = loginjTextfield.getText();
         
-        String inputPasswd = jPasswordField1.getText();
+        // Check if user exists
+        if (Finder.userExists(inputLogin)) {
+                String inputPasswd = jPasswordField1.getText();
+                // Check if password matches user
+                if (passwdComparer.comparePasswords(inputLogin, inputPasswd)) {
+                    EventQueue.invokeLater(() -> {
+                        new MainWindow(inputLogin).setVisible(true);
+                    });
+                    // Close the login window
+                    this.dispose();
+                } 
+                else { errorJLabel.setText("Wrong password!"); }    
+        }
         
-        if (passwdComparer.comparePasswords(inputLogin, inputPasswd)) {
+        else {
+            errorJLabel.setText("User does not exist!");
+        }
         
-            
-            EventQueue.invokeLater(() -> {
-                new MainWindow(inputLogin).setVisible(true);
-            });
-        
-            // Close the login window
-            this.dispose();
-            
-        } 
-        
-        else { errorJLabel.setText("Wrong password!"); }
+
         
         
         
