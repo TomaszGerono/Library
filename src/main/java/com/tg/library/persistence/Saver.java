@@ -18,7 +18,12 @@ import com.tg.library.objects.Book;
 public class Saver {
     
     
-    
+    /**
+     * Saves a user to database
+     * @param login
+     * @param passwordHash
+     * @return String 
+     */
     public static String saveUser(String login, String passwordHash) {
 
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -32,8 +37,7 @@ public class Saver {
 
         String sql = "INSERT INTO users(login, passwordHash, dateCreated, isActive) VALUES (?,?,?,?)";
 
-        try {
-            var conn = DriverManager.getConnection(Config.get_users_db_url());
+        try (var conn = DriverManager.getConnection(Config.get_users_db_url())) {
             var pstat = conn.prepareStatement(sql);
             pstat.setString(1, values.get(0).toString()); // SetString sets the value as a literal preventing sql injection
             pstat.setString(2, values.get(1).toString());
@@ -45,8 +49,7 @@ public class Saver {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
 
-            return "failed";
-            // Show the user "login already used by someone else"
+            return "failed";     // Show the user "login already used by someone else"
         }
     }
         

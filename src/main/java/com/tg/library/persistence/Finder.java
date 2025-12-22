@@ -25,7 +25,7 @@ public class Finder {
     /**
      * Queries the DB for all authors which match given arguments. 
      * If the user left a text field blank Swing's getText() method returns an
-     * empty String which then you pass as an argument and the if statements
+     * empty String which then is passed as an argument and the if statements
      * make sure the SQL query does not contain an empty String as a value argument.
      * 
      * @throws SQLException 

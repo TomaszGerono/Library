@@ -14,6 +14,12 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class passwdComparer {
     
+    /**
+     * Compares passwords
+     * @param inputLogin
+     * @param plaintextPasswd
+     * @return boolean
+     */
     public static boolean comparePasswords(String inputLogin, String plaintextPasswd) {
     
             try {
