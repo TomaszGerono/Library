@@ -129,11 +129,17 @@ public class Finder {
             
             while (rs.next()) {
                 String resultLogin = rs.getString("login");
-                var user = new User(); // creating empty users, todo: fix - constructor must take login, hash
+                var user = new User();
                 user.setLogin(resultLogin);
                 results.add(user);
             }
-            for (User user : results) { if (user.getLogin().equals(login)) {return true;} }
+            
+            for (User user : results) { 
+                if (user.getLogin().equals(login)) {
+                    return true;
+                }
+            }
+            
             return false;
         }
         
