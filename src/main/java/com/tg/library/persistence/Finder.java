@@ -21,6 +21,43 @@ import java.util.Set;
  * @author tomasz
  */
 public class Finder {
+    
+    
+    /**
+     * Counts the number of records in given table
+     * @return int numberOfRecords
+     */
+//    public int queryForNumberOfRecordsInTable(String tableName) {
+//    
+//    
+//        try (var conn = DriverManager.getConnection(Config.get_library_db_url())) {
+//        
+//            var sql = "SELECT COUNT(*) FROM ?";
+//            var pstat = conn.prepareStatement(sql);
+//            pstat.setString(1, tableName);
+//            var rs = pstat.execute();
+//            var count = 0;
+//            
+//            while (rs.next()) {
+//                count = rs.getInt(1);
+//            }
+//            
+//            
+//            
+//        
+//        }
+//        
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        }
+//        
+//    
+//    }
+//    
+//    
+//    
+    
    
     /**
      * Queries the DB for all authors which match given arguments. 
