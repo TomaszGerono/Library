@@ -1,4 +1,4 @@
-package com.tg.library.objects;
+package com.tg.library.model;
 
 /**
  *
@@ -7,6 +7,6 @@ package com.tg.library.objects;
 public class Publisher {
     
     private String name;
-    private Address address;
+    private AddressDTO address;
     
 }

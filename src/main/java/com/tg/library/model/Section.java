@@ -1,10 +1,11 @@
-package com.tg.library.objects;
+package com.tg.library.model;
 
 /**
  *
  * @author tomasz
  */
-public class Category {
+public class Section {
+    
     private String name;
 
     public String getName() {
@@ -14,6 +15,7 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+    
     
     
 }

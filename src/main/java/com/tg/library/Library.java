@@ -3,7 +3,12 @@ package com.tg.library;
 import java.awt.EventQueue;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import com.tg.library.entity.Authors;
 import com.tg.library.gui.LoginWindow;
+import com.tg.library.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
 
 /**
@@ -11,6 +16,9 @@ import com.tg.library.gui.LoginWindow;
  * @author tomasz
  */
 public class Library {
+
+    @Autowired
+    BookRepository bookRepository;
     
     private static String url = "jdbc:sqlite:./sqlite/db/library.db";
 
@@ -19,6 +27,9 @@ public class Library {
         EventQueue.invokeLater(() -> {
             new LoginWindow().setVisible(true);
         });
+
+//        BookRepository bookRepository;
+//        bookRepository.findAll(new Sort())
     }
     
     public static void startGUI() {

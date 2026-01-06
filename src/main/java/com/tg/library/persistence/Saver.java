@@ -1,14 +1,12 @@
 package com.tg.library.persistence;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.tg.library.Config;
-import com.tg.library.objects.Book;
-
 
 
 /**
@@ -35,7 +33,7 @@ public class Saver {
         values.add(stringCurrentDateTime);
         values.add(Integer.valueOf(1));
 
-        String sql = "INSERT INTO users(login, passwordHash, dateCreated, isActive) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO users(login, passwordHash, dateCreated, isActive) VALUES (?,?,?,?) returning id";
 
         try (var conn = DriverManager.getConnection(Config.get_users_db_url())) {
             var pstat = conn.prepareStatement(sql);
@@ -43,7 +41,7 @@ public class Saver {
             pstat.setString(2, values.get(1).toString());
             pstat.setString(3, values.get(2).toString());
             pstat.setInt(4, (int) values.get(3));
-            pstat.executeUpdate();
+            ResultSet rs = pstat.executeQuery();
 
             return "success";
         } catch (SQLException e) {

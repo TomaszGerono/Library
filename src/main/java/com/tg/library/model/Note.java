@@ -1,4 +1,4 @@
-package com.tg.library.objects;
+package com.tg.library.model;
 
 /**
  *

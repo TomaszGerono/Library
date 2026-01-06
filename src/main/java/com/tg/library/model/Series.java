@@ -1,12 +1,12 @@
-package com.tg.library.objects;
+package com.tg.library.model;
 
 /**
  *
  * @author tomasz
  */
-public class Topic {
+public class Series {
     
-    private String name;
+    private String name;    
 
     public String getName() {
         return name;
@@ -15,7 +15,6 @@ public class Topic {
     public void setName(String name) {
         this.name = name;
     }
-    
     
     
 }

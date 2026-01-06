@@ -1,10 +1,10 @@
-package com.tg.library.objects;
+package com.tg.library.model;
 
 /**
  *
  * @author tomasz
  */
-public class Section {
+public class Topic {
     
     private String name;
 

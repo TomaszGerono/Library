@@ -1,12 +1,12 @@
-package com.tg.library.objects;
+package com.tg.library.model;
 
 /**
  *
  * @author tomasz
  */
-public class Series {
+public class Genre {
     
-    private String name;    
+    private String name;
 
     public String getName() {
         return name;

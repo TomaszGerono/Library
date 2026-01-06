@@ -1,11 +1,10 @@
-package com.tg.library.objects;
+package com.tg.library.model;
 
 /**
  *
  * @author tomasz
  */
-public class Genre {
-    
+public class Category {
     private String name;
 
     public String getName() {
