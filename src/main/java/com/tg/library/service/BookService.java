@@ -1,14 +1,23 @@
 package com.tg.library.service;
 
+import com.tg.library.entity.Books;
 import com.tg.library.mapper.BooksMapper;
-import com.tg.library.model.BookDTO;
-import com.tg.library.repository.BookRepository;
+import com.tg.library.dto.BookDTO;
+import com.tg.library.repository.BooksRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class BookService {
-// Asia tutaj dodajesz sobie metody jakie potrzebujesz
 
-    // TODO sprawdzic jak wire'owac Asia
-    BookRepository bookRepository;
+    BooksRepository bookRepository;
+
+    @Autowired
+    public BookService(BooksRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     /**
      * Adding book to repository
@@ -34,6 +43,10 @@ public class BookService {
 
     public BookDTO find(BookDTO bookDTO) {
         return null;
+    }
+
+    public List<Books> findAll() {
+        return bookRepository.findAll();
     }
 
 }

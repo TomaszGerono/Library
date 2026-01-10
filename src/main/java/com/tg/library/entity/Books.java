@@ -1,6 +1,9 @@
 package com.tg.library.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,8 +25,7 @@ public class Books implements Serializable {
 
     @Id
     @Column(name = "book_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookId;
+    private Integer bookId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -32,18 +34,18 @@ public class Books implements Serializable {
     private String alternateTitle;
 
     @Column(name = "genre_id")
-    private Long genreId;
+    private Integer genreId;
 
     @Column(name = "section_id")
-    private Long sectionId;
+    private Integer sectionId;
 
     @Column(name = "main_character")
     private String mainCharacter;
 
     @Column(name = "series_id")
-    private Long seriesId;
+    private Integer seriesId;
 
     @Column(name = "topic_id")
-    private Long topicId;
+    private Integer topicId;
 
 }

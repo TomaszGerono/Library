@@ -1,19 +1,20 @@
 package com.tg.library.mapper;
 
 import com.tg.library.entity.Authors;
-import com.tg.library.model.AuthorDTO;
+import com.tg.library.dto.AuthorDTO;
 
 public class AuthorsMapper {
 
     // trzeba zmienic na Author bo liczba mnoga jest myląca
     public static Authors toAuthor(AuthorDTO authorDTO) {
 
-        Authors author = new Authors().builder()
+        Authors author = Authors.builder()
                 .authorId(authorDTO.id())
                 .title(authorDTO.title())
                 .firstName(authorDTO.firstName())
                 .lastName(authorDTO.lastName())
                 .monastery(authorDTO.monastery())
+                .middleName(authorDTO.middleName())
                 .build();
 
         return author;
@@ -21,14 +22,13 @@ public class AuthorsMapper {
     }
 
     public static AuthorDTO toAuthorDTO(Authors authors) {
-        AuthorDTO authorDTO = new AuthorDTO.Builder()
-                .id(authors.getAuthorId()) // withId
-                .title(authors.getTitle()) // withTitle
+        AuthorDTO authorDTO = AuthorDTO.builder()
+                .id(authors.getAuthorId())
+                .title(authors.getTitle())
                 .firstName(authors.getFirstName())
                 .lastName(authors.getLastName())
                 .monastery(authors.getMonastery())
                 .build();
-
         return authorDTO;
 
     }

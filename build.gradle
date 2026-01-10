@@ -1,0 +1,49 @@
+plugins {
+    id "java"
+//    id "org.openjfx.javafxplugin" version "0.0.13"
+    id "application"
+    id("org.javamodularity.moduleplugin") version "1.8.15"
+    id("org.openjfx.javafxplugin") version "0.1.0"
+    id("org.beryx.jlink") version "3.2.0"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(23)
+    }
+}
+
+application {
+    mainModule = 'com.tg.library.demo'
+    mainClass = 'com.tg.library.demo.HelloApplication'
+}
+
+javafx {
+    version = '21.0.6'
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing', 'javafx.media']
+}
+
+group = "com.tg.library"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot:4.0.0")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:4.0.0")
+    implementation("org.xerial:sqlite-jdbc:3.50.3.0")
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    implementation("org.hibernate.orm:hibernate-community-dialects:7.2.0.Final")
+
+    annotationProcessor "org.projectlombok:lombok:1.18.42"
+
+    testImplementation platform("org.junit:junit-bom:5.10.0")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+}
+
+test {
+    useJUnitPlatform()
+}

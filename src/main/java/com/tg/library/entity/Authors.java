@@ -2,7 +2,6 @@ package com.tg.library.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
@@ -10,8 +9,9 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-@SuperBuilder
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "authors")
 public class Authors implements Serializable {
 

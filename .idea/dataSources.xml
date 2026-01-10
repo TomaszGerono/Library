@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\tomek\Library\sqlite\db\library.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="library.db [2]" uuid="fb392f9e-69e7-4532-9b52-eb31e7e14c67">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Projects\Library2\sqlite\db\library.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
