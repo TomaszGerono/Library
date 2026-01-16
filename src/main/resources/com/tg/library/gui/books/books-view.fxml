@@ -1,0 +1,58 @@
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Label?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.tg.library.gui.controller.BooksController"
+            id="booksRoot">
+    <top>
+        <VBox spacing="8">
+            <HBox spacing="8">
+                <TextField fx:id="titleFilter" promptText="Title"/>
+                <TextField fx:id="authorFilter" promptText="Author"/>
+                <ComboBox fx:id="genreFilter" promptText="Genre"/>
+                <TextField fx:id="yearFilter" promptText="Year"/>
+                <Button text="Clear" onAction="#onClearFilters"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <SplitPane>
+            <TableView fx:id="booksTable">
+                <columns>
+                    <TableColumn fx:id="titleCol" text="Title"/>
+                    <TableColumn fx:id="authorCol" text="Author(s)" prefWidth="220" minWidth="220" maxWidth="220"/>
+                    <TableColumn fx:id="genreCol" text="Genre"/>
+                    <TableColumn fx:id="yearCol" text="Year"/>
+                    <TableColumn fx:id="isbnCol" text="ISBN"/>
+                    <TableColumn fx:id="statusCol" text="Status"/>
+                    <TableColumn fx:id="pagesCol" text="No. of pages"/>
+                </columns>
+            </TableView>
+
+            <fx:include source="/com/tg/library/gui/books/book-details-pane.fxml"/>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <ToolBar>
+            <Button fx:id="addBtn" text="➕ Add" onAction="#onAdd"/>
+            <Button fx:id="editBtn" text="✏ Edit" onAction="#onEdit"/>
+            <Button fx:id="removeBtn" text="🗑 Delete" onAction="#onRemove"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label fx:id="resultCountLabel"/>
+        </ToolBar>
+
+    </bottom>
+</BorderPane>

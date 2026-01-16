@@ -1,6 +1,5 @@
 plugins {
     id "java"
-//    id "org.openjfx.javafxplugin" version "0.0.13"
     id "application"
     id("org.javamodularity.moduleplugin") version "1.8.15"
     id("org.openjfx.javafxplugin") version "0.1.0"
@@ -10,12 +9,13 @@ plugins {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(23)
+        modularity.inferModulePath = false
     }
 }
 
 application {
-    mainModule = 'com.tg.library.demo'
-    mainClass = 'com.tg.library.demo.HelloApplication'
+    //mainModule = 'com.tg.library'
+    mainClass = 'com.tg.library.App'
 }
 
 javafx {
@@ -30,20 +30,42 @@ repositories {
     mavenCentral()
 }
 
+configurations.configureEach {
+    exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    exclude group: "org.apache.logging.log4j", module: "log4j-to-slf4j"
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot:4.0.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:4.0.0")
     implementation("org.xerial:sqlite-jdbc:3.50.3.0")
     compileOnly("org.projectlombok:lombok:1.18.42")
     implementation("org.hibernate.orm:hibernate-community-dialects:7.2.0.Final")
+    implementation('org.springframework.boot:spring-boot-starter:4.0.0')
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2:4.0.0'
 
     annotationProcessor "org.projectlombok:lombok:1.18.42"
 
     testImplementation platform("org.junit:junit-bom:5.10.0")
     testImplementation "org.junit.jupiter:junit-jupiter"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'org.testfx:testfx-junit5:4.0.16-alpha'
+    testImplementation 'org.testfx:testfx-core:4.0.16-alpha'
+    testImplementation 'org.mockito:mockito-core:5.12.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.12.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:4.0.0'
+
+    // Headless (opcjonalnie, ale przydatne na CI)
+    testImplementation 'org.testfx:openjfx-monocle:8u76-b04'
 }
 
 test {
     useJUnitPlatform()
+    systemProperty "spring.profiles.active", "test"
+    // headless (opcjonalnie)
+//    systemProperty "javafx.platform", "Monocle"
+//    systemProperty "monocle.platform", "Headless"
+//    systemProperty "prism.order", "sw"
+//    systemProperty "prism.text", "t2k"
 }

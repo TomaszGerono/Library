@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.tg.library.gui.controller.CategorizationController"
+            id="categorizationRoot">
+
+    <top>
+        <ToolBar>
+            <Label text="Categorisation"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button text="⟳ Odśwież" onAction="#onRefresh"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.32">
+
+            <!-- Lewa strona: wybór typu grupowania + lista grup -->
+            <VBox spacing="10">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                <Label text="Group according to:"/>
+                <ComboBox fx:id="groupByCombo" prefWidth="240"/>
+
+                <TextField fx:id="groupSearchField" promptText="Search for group..."/>
+
+                <Label fx:id="groupsCountLabel"/>
+                <ListView fx:id="groupsList" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <!-- Prawa strona: tabela książek w wybranej grupie -->
+            <VBox spacing="10">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                <Label fx:id="selectedGroupLabel" text="Pick group on the left"/>
+
+                <TableView fx:id="booksTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="titleCol" text="Title" prefWidth="260"/>
+                        <TableColumn fx:id="authorCol" text="Author(s)" prefWidth="200"/>
+                        <TableColumn fx:id="genreCol" text="Genre" prefWidth="140"/>
+                        <TableColumn fx:id="seriesCol" text="Series" prefWidth="160"/>
+                        <TableColumn fx:id="yearCol" text="Year" prefWidth="70"/>
+                        <TableColumn fx:id="statusCol" text="Status" prefWidth="110"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+</BorderPane>

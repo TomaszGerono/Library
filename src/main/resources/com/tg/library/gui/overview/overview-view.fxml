@@ -1,0 +1,44 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<!--<VBox fx:controller="com.tg.library.gui.controller.OverviewController"-->
+<!--      xmlns:fx="http://javafx.com/fxml" spacing="12" padding="14">-->
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <Label text="Library overview" styleClass="app-title"/>
+
+    <HBox spacing="10">
+        <VBox styleClass="kpi-card">
+            <Label text="Books"/>
+            <Label fx:id="totalBooksLabel" styleClass="kpi-value"/>
+        </VBox>
+        <VBox styleClass="kpi-card">
+            <Label text="Shelves"/>
+            <Label fx:id="totalShelvesLabel" styleClass="kpi-value"/>
+        </VBox>
+        <VBox styleClass="kpi-card">
+            <Label text="Unread"/>
+            <Label fx:id="unreadLabel" styleClass="kpi-value"/>
+        </VBox>
+        <VBox styleClass="kpi-card">
+            <Label text="In progress"/>
+            <Label fx:id="readingLabel" styleClass="kpi-value"/>
+        </VBox>
+        <VBox styleClass="kpi-card">
+            <Label text="Finished"/>
+            <Label fx:id="completedLabel" styleClass="kpi-value"/>
+        </VBox>
+    </HBox>
+
+    <Separator/>
+
+    <Label text="Recommendations" styleClass="section-title"/>
+    <ListView fx:id="recommendationsList" prefHeight="240"/>
+</VBox>

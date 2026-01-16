@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="com.tg.library.gui.controller.BookDetailsController"
+      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets bottom="10" left="10" right="10" top="10"/>
+    </padding>
+    <Label text="Details"/>
+    <GridPane hgap="8" vgap="8">
+        <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Label fx:id="titleValue" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Author:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <Label fx:id="authorValue" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <ComboBox fx:id="statusCombo" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <columnConstraints>
+            <ColumnConstraints/>
+            <ColumnConstraints/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints/>
+            <RowConstraints/>
+            <RowConstraints/>
+        </rowConstraints>
+    </GridPane>
+
+    <Label text="Notes"/>
+    <TextArea fx:id="notesArea" prefRowCount="8"/>
+
+    <HBox spacing="8">
+        <Button fx:id="saveNotesBtn" text="➕ Save notes">
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+        </Button>
+        <Pane HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <Separator/>
+    <Label text="Topics"/>
+    <ListView fx:id="topicsList"/>
+    <HBox spacing="8">
+        <Button text="Add to topic"/>
+        <Button text="Delete from topic"/>
+    </HBox>
+</VBox>

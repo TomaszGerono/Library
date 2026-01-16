@@ -1,0 +1,42 @@
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<DialogPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.tg.library.gui.controller.BookFormDialogController">
+    <content>
+        <VBox spacing="10" styleClass="dialog-root">
+            <GridPane hgap="10" vgap="10">
+                <Label text="Title *" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Author *" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="authorField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Genre" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="genreCombo" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="260"/>
+
+                <Label text="Year" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="yearField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="ISBN" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="isbnField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="Number of pages" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="pagesField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Label text="Seria" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <TextField fx:id="seriesField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <Label fx:id="errorLabel" styleClass="error-label" visible="false"/>
+        </VBox>
+    </content>
+    <buttonTypes>
+        <ButtonType fx:constant="CANCEL"/>
+        <ButtonType text="Save" fx:id="saveButtonType" buttonData="OK_DONE"/>
+    </buttonTypes>
+</DialogPane>

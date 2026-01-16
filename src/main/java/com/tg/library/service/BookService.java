@@ -1,11 +1,10 @@
 package com.tg.library.service;
 
 import com.tg.library.entity.Books;
-import com.tg.library.mapper.BooksMapper;
-import com.tg.library.dto.BookDTO;
 import com.tg.library.repository.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,29 +18,26 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    /**
-     * Adding book to repository
-     * @param bookDTO
-     */
-    public void add(BookDTO bookDTO) {
+    @Transactional
+    public Books add(Books books) {
 
-        bookRepository.save(BooksMapper.toBook(bookDTO));
+        return bookRepository.saveAndFlush(books);
 
     }
 
-    public void update(BookDTO bookDTO) {
+    public Books update(Books books) {
 
-        bookRepository.save(BooksMapper.toBook(bookDTO));
-
-    }
-
-    public void remove(BookDTO bookDTO) {
-
-        bookRepository.delete(BooksMapper.toBook(bookDTO));
+        return bookRepository.save(books);
 
     }
 
-    public BookDTO find(BookDTO bookDTO) {
+    public void remove(Books books) {
+
+        bookRepository.delete(books);
+
+    }
+
+    public Books find(Books books) {
         return null;
     }
 
