@@ -22,15 +22,14 @@ public class ExportController {
     private File targetFile;
 
     /**
-     * Opens the native file chooser to select where to save the CSV/JSON
+     * Opens the native file chooser to select where to save the CSV
      */
     @FXML
     public void onSelectFile() {
         FileChooser fc = new FileChooser();
         fc.setTitle("Select Export Destination");
         fc.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("CSV Files", "*.csv"),
-                new FileChooser.ExtensionFilter("JSON Files", "*.json")
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv")
         );
 
         // Get the current window from the text field
@@ -63,14 +62,14 @@ public class ExportController {
         String sqliteExe;
 
         if (System.getProperty("os.name").toLowerCase().contains("win")) {
-            // Assume you have sqlite3.exe in your project or PATH
+            // assume sqlite3 is in project or PATH
             sqliteExe = "sqlite3";
         } else {
-            sqliteExe = "sqlite3"; // Standard on Linux
+            sqliteExe = "sqlite3";
         }
 
         try {
-            // 2. Build the command
+            // build the command
             // sqlite3 -header -csv "path/to/db" "select * from books;" > "path/to/output.csv"
             ProcessBuilder pb = new ProcessBuilder(
                     sqliteExe,
@@ -80,7 +79,7 @@ public class ExportController {
                     "SELECT * FROM books;" // Your query
             );
 
-            // 3. Redirect output directly to the file the user selected
+            // redirect output directly to the file the user selected
             pb.redirectOutput(targetFile);
 
             Process p = pb.start();
@@ -88,7 +87,7 @@ public class ExportController {
 
             if (exitCode == 0) {
                 System.out.println("Export Successful: " + targetFile.getAbsolutePath());
-                onCancel(); // Close window
+                onCancel();
             } else {
                 System.err.println("Export failed with code: " + exitCode);
             }

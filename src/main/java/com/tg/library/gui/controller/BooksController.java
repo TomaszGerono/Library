@@ -8,6 +8,7 @@ import com.tg.library.gui.view.BooksViewModel;
 import com.tg.library.gui.view.SelectionBus;
 import com.tg.library.service.BookService;
 import com.tg.library.service.GenresService;
+import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
@@ -253,12 +254,23 @@ public class BooksController {
 //        }, this::loadAsync);
     }
 
+    @FXML
+    public void onRefresh() {
+//        booksTable.getItems().clear();
+//        var allBooks = bookService.findAll();
+//        booksTable.setItems(FXCollections.observableArrayList(allBooks));
+//        resultCountLabel.setText("Results: " + allBooks.size());
+        loadAsync();
+    }
+
     private void loadAsync() {
 
         runAsync("Loading books", () -> bookService.findAll(), books -> {
+            System.out.println(">>> 2. Querying Database..."); // Debug check
             var safe = books == null ? java.util.List.<Books>of()
                     : books.stream().filter(java.util.Objects::nonNull).toList();
 
+            System.out.println(">>> 3. Database returned: " + safe.size() + " books.");
             log.info("TTT Loaded={} nonNull={}", books == null ? 0 : books.size(), safe.size());
 
             vm.setAll(safe);

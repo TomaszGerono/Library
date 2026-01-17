@@ -24,25 +24,6 @@ public class MainShellController {
         this.ctx = ctx;
     }
 
-    public void onImport() {
-//        FileChooser fc = new FileChooser();
-//        fc.setTitle("Import");
-//        fc.getExtensionFilters().addAll(
-//                new FileChooser.ExtensionFilter("CSV", "*.csv"),
-//                new FileChooser.ExtensionFilter("JSON", "*.json")
-//        );
-//        File f = fc.showOpenDialog(Dialogs.ownerWindow());
-//        if (f == null) return;
-//
-//        try {
-//            if (f.getName().toLowerCase().endsWith(".csv")) ctx.importExport().importFromCsv(f);
-//            else ctx.importExport().importFromJson(f);
-//            Dialogs.info("Import zakończony", "Plik został zaimportowany.");
-//        } catch (Exception e) {
-//            Dialogs.error("Import nieudany", e.getMessage());
-//        }
-    }
-
     @FXML
     public void onExport() {
         try {
@@ -61,6 +42,26 @@ public class MainShellController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void onImport() {
+        try {
+            var fxmlPath = "/com/tg/library/gui/import/import.fxml";
+            var loader = new FXMLLoader(MainShellController.class.getResource(fxmlPath));
+
+            loader.setControllerFactory(ctx.getSpringContext()::getBean);
+
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Import Configuration");
+            stage.initModality(Modality.APPLICATION_MODAL); // Blocks the main window until closed
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

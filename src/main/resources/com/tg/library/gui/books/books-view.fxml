@@ -51,6 +51,7 @@
             <Button fx:id="addBtn" text="➕ Add" onAction="#onAdd"/>
             <Button fx:id="editBtn" text="✏ Edit" onAction="#onEdit"/>
             <Button fx:id="removeBtn" text="🗑 Delete" onAction="#onRemove"/>
+            <Button fx:id="refreshBtn" text="Refresh" onAction="#onRefresh"/>
             <Pane HBox.hgrow="ALWAYS"/>
             <Label fx:id="resultCountLabel"/>
         </ToolBar>

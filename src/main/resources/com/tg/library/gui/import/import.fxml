@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tg.library.gui.controller.ImportController">
+    <children>
+        <VBox alignment="CENTER" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <Label style="-fx-font-weight: bold;" text="Import data from CSV" />
+
+                <HBox spacing="10.0" alignment="CENTER">
+                    <children>
+                        <TextField fx:id="pathDisplayField" editable="false" promptText="No file selected..." HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#onSelectFile" text="Choose file" />
+                    </children>
+                </HBox>
+
+                <HBox spacing="10.0" alignment="CENTER_RIGHT">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
+                        <Button fx:id="confirmButton" disable="true" mnemonicParsing="false" onAction="#onConfirmImport" text="Import Now" style="-fx-base: #2ecc71;" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
