@@ -5,7 +5,7 @@ public class ShelvesViewModel {
 //    private final ShelfService shelfService;
 //    private final BookService bookService;
 //
-//    private final ObservableList<Shelf> shelves = FXCollections.observableArrayList();
+//    private final ObservableList<Shelf> topics = FXCollections.observableArrayList();
 //    private final ObservableList<Book> shelfBooks = FXCollections.observableArrayList();
 //
 //    private final ObjectProperty<Shelf> selectedShelf = new SimpleObjectProperty<>();
@@ -18,12 +18,12 @@ public class ShelvesViewModel {
 //    }
 
 //    public void load() {
-//        shelves.setAll(shelfService.findAll());
+//        topics.setAll(shelfService.findAll());
 //        if (selectedShelf.get() != null) loadBooksForSelectedShelf();
 //        else shelfBooks.clear();
 //    }
 //
-//    public ObservableList<Shelf> shelves() { return shelves; }
+//    public ObservableList<Shelf> topics() { return topics; }
 //    public ObservableList<Book> shelfBooks() { return shelfBooks; }
 //
 //    public ObjectProperty<Shelf> selectedShelfProperty() { return selectedShelf; }

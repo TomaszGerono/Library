@@ -32,14 +32,14 @@ values(5, "Andrew", "", "Hunt", "", "");
 insert into authors(id, first_name, middle_name, last_name, monastery, title)
 values(6, "David", "", "Thomas", "", "");
 
-insert into books(id, title, isbn, genre_id, series_id, pages_count, publication_year, reading_progress)
-values(1, "Pan Tadeusz", "1234-1234-234", 1, null, 148, 1967, 'unread');
+insert into books(id, title, isbn, genre_id, series_id, pages_count, publication_year, reading_progress, monastery)
+values(1, "Pan Tadeusz", "1234-1234-234", 1, null, 148, 1967, 'unread', 'value');
 
-insert into books(id, title, isbn, genre_id, series_id, pages_count, publication_year, reading_progress)
-values(2, "Lalka", "1234-1234-234", 1, null, 149, 1967, 'reading');
+insert into books(id, title, isbn, genre_id, series_id, pages_count, publication_year, reading_progress, monastery)
+values(2, "Lalka", "1234-1234-234", 1, null, 149, 1967, 'reading', 'tyniec');
 
-insert into books(id, title, isbn, genre_id, series_id, pages_count, publication_year, reading_progress)
-values(3, "The Pragmatic Programmer", "326-326-326", 2, null, 150, 2015, 'completed');
+insert into books(id, title, isbn, genre_id, series_id, pages_count, publication_year, reading_progress, monastery)
+values(3, "The Pragmatic Programmer", "326-326-326", 2, null, 150, 2015, 'completed', 'tyniec 2');
 
 insert into book_authors(author_id, book_id) values(1, 1);
 insert into book_authors(author_id, book_id) values(2, 2);

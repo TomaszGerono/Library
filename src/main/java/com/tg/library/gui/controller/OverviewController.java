@@ -24,7 +24,7 @@ public class OverviewController {
 
     public void afterContextInjected() {
         // TODO uncomment
-//        this.vm = new OverviewViewModel(ctx.books(), ctx.shelves());
+//        this.vm = new OverviewViewModel(ctx.books(), ctx.topics());
 //        vm.load();
 //
 //        totalBooksLabel.textProperty().bind(vm.totalBooks.asString());

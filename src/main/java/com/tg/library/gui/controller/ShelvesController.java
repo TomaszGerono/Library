@@ -30,10 +30,10 @@ public class ShelvesController {
     public void setContext(AppContext ctx) { this.ctx = ctx; }
 
     public void afterContextInjected() {
-//        this.shelvesViewModel = new ShelvesViewModel(ctx.shelves(), ctx.books());
+//        this.shelvesViewModel = new ShelvesViewModel(ctx.topics(), ctx.books());
 //        shelvesViewModel.load();
 //
-//        shelvesList.setItems(shelvesViewModel.shelves());
+//        shelvesList.setItems(shelvesViewModel.topics());
 //        shelvesList.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> {
 //            shelvesViewModel.setSelectedShelf(n);
 //            renameBtn.setDisable(n == null);

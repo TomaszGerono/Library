@@ -1,5 +1,9 @@
 package com.tg.library;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+
+@Component
 public class AppContext {
 //    private final BookService bookService;
 //    private final ShelfService shelfService;
@@ -15,8 +19,19 @@ public class AppContext {
 //    }
 //
 //    public BookService books() { return bookService; }
-//    public ShelfService shelves() { return shelfService; }
+//    public ShelfService topics() { return shelfService; }
 //    public ImportExportService importExport() { return importExportService; }
 //    public RecommendationService recommendations() { return recommendationService; }
+
+    private final ApplicationContext springContext;
+
+    public AppContext(ApplicationContext springContext) {
+        this.springContext = springContext;
+    }
+
+    public ApplicationContext getSpringContext() {
+        return springContext;
+    }
+
 }
 

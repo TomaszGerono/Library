@@ -31,7 +31,7 @@
                 </Tab>
                 <Tab text="Topics" closable="false">
                     <content>
-                        <fx:include source="/com/tg/library/gui/shelves/shelves-view.fxml"/>
+                        <fx:include source="/com/tg/library/gui/topics/topics-view.fxml"/>
                     </content>
                 </Tab>
                 <Tab text="Categories" closable="false">

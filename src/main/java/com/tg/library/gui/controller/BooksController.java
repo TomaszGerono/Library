@@ -75,6 +75,9 @@ public class BooksController {
     private TableColumn<Books, Integer> pagesCol;
     @FXML
     private TableColumn<Books, Progress> statusCol;
+    @FXML
+    private TableColumn<Books, String> monasteryCol;
+
 
     @FXML
     private Button editBtn;
@@ -98,8 +101,10 @@ public class BooksController {
 
         yearCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getPublicationYear()));
         isbnCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(nullSafe(data.getValue().getIsbn())));
+        // TODO: obsluzyc nulla w linii 105
         pagesCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(Optional.of(data.getValue().getPagesCount()).orElse(0)));
         statusCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getReadingProgress()));
+        monasteryCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(nullSafe(data.getValue().getMonastery())));
 
         enableTooltipForColumn(titleCol);
         enableTooltipForColumn(authorCol);

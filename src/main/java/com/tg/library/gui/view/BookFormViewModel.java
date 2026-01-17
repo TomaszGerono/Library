@@ -13,6 +13,7 @@ public class BookFormViewModel {
     public final StringProperty isbn = new SimpleStringProperty("");
     public final StringProperty pages = new SimpleStringProperty("");
     public final StringProperty series = new SimpleStringProperty("");
+    public final StringProperty monastery = new SimpleStringProperty("");
 
     public void fromBook(Books b) {
         if (b == null) return;

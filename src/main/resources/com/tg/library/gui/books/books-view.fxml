@@ -38,6 +38,7 @@
                     <TableColumn fx:id="isbnCol" text="ISBN"/>
                     <TableColumn fx:id="statusCol" text="Status"/>
                     <TableColumn fx:id="pagesCol" text="No. of pages"/>
+                    <TableColumn fx:id="monasteryCol" text="Monastery"/>
                 </columns>
             </TableView>
 

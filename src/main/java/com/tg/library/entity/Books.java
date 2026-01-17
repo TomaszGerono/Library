@@ -97,4 +97,7 @@ public class Books implements Serializable {
     @Column(name = "reading_progress")
     private Progress readingProgress = Progress.unread;
 
+    @Column(name = "monastery")
+    private String monastery;
+
 }
