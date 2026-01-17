@@ -20,7 +20,7 @@
             <Label fx:id="totalBooksLabel" styleClass="kpi-value"/>
         </VBox>
         <VBox styleClass="kpi-card">
-            <Label text="Shelves"/>
+            <Label text="Topics"/>
             <Label fx:id="totalShelvesLabel" styleClass="kpi-value"/>
         </VBox>
         <VBox styleClass="kpi-card">

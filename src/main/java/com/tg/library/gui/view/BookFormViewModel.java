@@ -42,7 +42,6 @@ public class BookFormViewModel {
 
     public String validate() {
         if (title.get().trim().isEmpty()) return "Title field is required.";
-        if (author.get().trim().isEmpty()) return "Author field is required.";
         if (!year.get().isBlank() && parseIntOrNull(year.get()) == null) return "Year must be a number.";
         if (!pages.get().isBlank() && parseIntOrNull(pages.get()) == null) return "Pages must be a number.";
         return null;

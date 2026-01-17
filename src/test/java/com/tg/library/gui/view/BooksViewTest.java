@@ -4,6 +4,7 @@ import com.tg.library.entity.Authors;
 import com.tg.library.entity.Books;
 import com.tg.library.entity.Genres;
 import com.tg.library.gui.controller.BooksController;
+import com.tg.library.service.AuthorService;
 import com.tg.library.service.BookService;
 import com.tg.library.service.GenresService;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,7 @@ public class BooksViewTest extends ApplicationTest {
 
     private BookService bookServiceMock;
     private GenresService genresServiceMock;
+    private AuthorService authorServiceMock;
     private BooksController controller;
 
     @Override
@@ -46,9 +48,10 @@ public class BooksViewTest extends ApplicationTest {
 
         // TODO add genresService - dane
         genresServiceMock = Mockito.mock(GenresService.class);
+        authorServiceMock = Mockito.mock(AuthorService.class);
 
         // 2️⃣ kontroler z mockiem
-        controller = new BooksController(bookServiceMock, genresServiceMock);
+        controller = new BooksController(bookServiceMock, genresServiceMock, authorServiceMock);
 
         // 3️⃣ załaduj FXML z kontrolerem
         URL fxml = getClass().getResource("/com/tg/library/gui/books/books-view.fxml");

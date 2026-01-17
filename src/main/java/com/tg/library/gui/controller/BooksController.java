@@ -6,6 +6,7 @@ import com.tg.library.entity.Progress;
 import com.tg.library.gui.util.AuthorsFormatter;
 import com.tg.library.gui.view.BooksViewModel;
 import com.tg.library.gui.view.SelectionBus;
+import com.tg.library.service.AuthorService;
 import com.tg.library.service.BookService;
 import com.tg.library.service.GenresService;
 import javafx.collections.FXCollections;
@@ -35,22 +36,16 @@ import java.util.Optional;
 @Component
 public class BooksController {
 
+    private static final Logger LOG = LogManager.getLogger(BooksController.class);
+
     private static final PseudoClass UNREAD_PC = PseudoClass.getPseudoClass("unread");
     private static final PseudoClass READING_PC = PseudoClass.getPseudoClass("reading");
     private static final PseudoClass COMPLETED_PC = PseudoClass.getPseudoClass("completed");
 
     private final BookService bookService;
     private final GenresService genresService;
-    private static final Logger LOG = LogManager.getLogger(BooksController.class);
-
-    @Autowired
-    public BooksController(BookService bookService, GenresService genresService) {
-        this.bookService = bookService;
-        this.genresService = genresService;
-    }
-
+    private final AuthorService authorsService;
     private final BooksViewModel vm = new BooksViewModel();
-
     @FXML
     private TextField titleFilter;
     @FXML
@@ -59,7 +54,6 @@ public class BooksController {
     private ComboBox<Genres> genreFilter;
     @FXML
     private TextField yearFilter;
-
     @FXML
     private TableView<Books> booksTable;
     @FXML
@@ -84,7 +78,43 @@ public class BooksController {
     private Button editBtn;
     @FXML
     private Button removeBtn;
-    @FXML private Label resultCountLabel;
+    @FXML
+    private Label resultCountLabel;
+    @Autowired
+    public BooksController(BookService bookService, GenresService genresService, AuthorService authorsService) {
+        this.bookService = bookService;
+        this.genresService = genresService;
+        this.authorsService = authorsService;
+    }
+
+    private static String nullSafe(String s) {
+        return s == null ? "" : s;
+    }
+
+    private static <S> void enableTooltipForColumn(TableColumn<S, String> col) {
+        col.setCellFactory(c -> new TableCell<>() {
+            private final Tooltip tooltip = new Tooltip();
+
+            {
+                setTextOverrun(OverrunStyle.ELLIPSIS);
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null || item.isBlank()) {
+                    setText(null);
+                    setTooltip(null);
+                    return;
+                }
+
+                setText(item);
+                tooltip.setText(item);
+                setTooltip(tooltip);
+            }
+        });
+    }
 
     @FXML
     public void initialize() {
@@ -182,15 +212,21 @@ public class BooksController {
         loadAsync();
 
         genreFilter.setConverter(new javafx.util.StringConverter<Genres>() {
-            @Override public String toString(Genres g) {
+            @Override
+            public String toString(Genres g) {
                 return (g == null) ? "" : nullSafe(g.getName());
             }
-            @Override public Genres fromString(String s) { return null; }
+
+            @Override
+            public Genres fromString(String s) {
+                return null;
+            }
         });
 
 // to samo dla listy rozwijanej (żeby też była ładna)
         genreFilter.setCellFactory(lv -> new ListCell<>() {
-            @Override protected void updateItem(Genres g, boolean empty) {
+            @Override
+            protected void updateItem(Genres g, boolean empty) {
                 super.updateItem(g, empty);
                 setText(empty || g == null ? "" : nullSafe(g.getName()));
             }
@@ -201,6 +237,10 @@ public class BooksController {
                 .addListener((obs, old, selected) -> {
                     SelectionBus.INSTANCE.setSelectedBook(selected);
                 });
+
+        SelectionBus.INSTANCE.booksChangedProperty().addListener((obs, o, n) -> {
+            booksTable.refresh();
+        });
 
         LOG.info("BooksController initialized");
     }
@@ -214,7 +254,8 @@ public class BooksController {
     @FXML
     public void onAdd() {
         var genres = genresService.findAll();
-        var result = BookFormDialogController.showDialog(Dialogs.ownerWindow(), null, genres);
+        var authors = authorsService.findAll();
+        var result = BookFormDialogController.showDialog(Dialogs.ownerWindow(), null, genres, authors);
         if (result == null) return;
         //BookFormDialogController.Result r = BookFormDialogController.showDialog(Dialogs.ownerWindow(), null, genres);
         if (result == null || result.book() == null) return;
@@ -227,6 +268,28 @@ public class BooksController {
 
     @FXML
     public void onEdit() {
+
+        Books selected = booksTable.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        // dane do comboboxów/list (genre + autorzy)
+        var genres = genresService.findAll();
+        var authors = authorsService.findAll(); // jeśli masz wybór autorów w dialogu
+
+        // OTWÓRZ dialog w trybie edycji: przekazujesz selected
+        var result = BookFormDialogController.showDialog(
+                Dialogs.ownerWindow(),
+                selected,
+                genres,
+                authors
+        );
+
+        if (result == null || result.book() == null) return;
+
+        runAsync("Updating book",
+                () -> bookService.update(result.book()),
+                this::loadAsync);
+
 //        BookDTO selected = vm.getSelectedBook();
 //        if (selected == null) return;
 //
@@ -241,17 +304,24 @@ public class BooksController {
 
     @FXML
     public void onRemove() {
-//        BookDTO selected = vm.getSelectedBook();
-//        if (selected == null) return;
-//
-//        boolean ok = Dialogs.confirm("Usunąć książkę?",
-//                "Czy na pewno usunąć: " + selected.title() + " ?");
-//        if (!ok) return;
-//
-//        runAsync("Usuwanie", () -> {
-//            bookService.deleteById(selected.id());
-//            return null;
-//        }, this::loadAsync);
+        Books selected = booksTable.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        boolean ok = Dialogs.confirm(
+                "Delete book ?",
+                "Are you sure you want to delete: " + selected.getTitle() + "?"
+        );
+        if (!ok) return;
+
+        Long id = selected.getId();
+        if (id == null) {
+            Dialogs.error("Error", "Cannot remove book without ID.");
+            return;
+        }
+
+        runAsync("Removing book",
+                () -> bookService.deleteById(id),
+                this::loadAsync);
     }
 
     @FXML
@@ -295,9 +365,7 @@ public class BooksController {
         genreFilter.setItems(items);
     }
 
-    private static String nullSafe(String s) {
-        return s == null ? "" : s;
-    }
+
 
     private <T> void runAsync(String opName, java.util.concurrent.Callable<T> work, java.util.function.Consumer<T> onSuccess) {
         Task<T> task = new Task<>() {
@@ -334,31 +402,6 @@ public class BooksController {
         Thread t = new Thread(task, "fx-" + opName.replace(' ', '-').toLowerCase());
         t.setDaemon(true);
         t.start();
-    }
-
-    private static <S> void enableTooltipForColumn(TableColumn<S, String> col) {
-        col.setCellFactory(c -> new TableCell<>() {
-            private final Tooltip tooltip = new Tooltip();
-
-            {
-                setTextOverrun(OverrunStyle.ELLIPSIS);
-            }
-
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null || item.isBlank()) {
-                    setText(null);
-                    setTooltip(null);
-                    return;
-                }
-
-                setText(item);
-                tooltip.setText(item);
-                setTooltip(tooltip);
-            }
-        });
     }
 
 }

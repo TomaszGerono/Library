@@ -1,42 +1,107 @@
-<?import javafx.scene.control.ButtonType?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DialogPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.VBox?>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
 <DialogPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.tg.library.gui.controller.BookFormDialogController">
+
     <content>
         <VBox spacing="10" styleClass="dialog-root">
+
             <GridPane hgap="10" vgap="10">
+
+                <!-- ===== Row 0: Title ===== -->
                 <Label text="Title *" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                 <TextField fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                <Label text="Author *" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="authorField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <!-- ===== Row 1: Authors label ===== -->
+                <Label text="Autor(s)"
+                       GridPane.rowIndex="1" GridPane.columnIndex="0"
+                       GridPane.columnSpan="2"/>
 
-                <Label text="Genre" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="genreCombo" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="260"/>
+                <!-- ===== Row 2: Authors section ===== -->
+                <GridPane hgap="10" vgap="8"
+                          GridPane.rowIndex="2" GridPane.columnIndex="0"
+                          GridPane.columnSpan="2">
 
-                <Label text="Year" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <TextField fx:id="yearField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="45"/>
+                        <ColumnConstraints hgrow="NEVER" percentWidth="10"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="45"/>
+                    </columnConstraints>
 
-                <Label text="ISBN" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <TextField fx:id="isbnField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <rowConstraints>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="ALWAYS"/>
+                        <RowConstraints vgrow="NEVER"/>
+                    </rowConstraints>
 
-                <Label text="Number of pages" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                <TextField fx:id="pagesField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    <!-- search left -->
+                    <TextField fx:id="authorSearchField"
+                               promptText="Find author..."
+                               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
 
-                <Label text="Seria" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                <TextField fx:id="seriesField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                    <!-- selected label right -->
+                    <Label text="Wybrani"
+                           GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+                    <!-- available authors -->
+                    <ListView fx:id="authorsList"
+                              prefHeight="170"
+                              GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+                    <!-- add/remove buttons -->
+                    <VBox spacing="8" alignment="CENTER"
+                          GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button text="➕" onAction="#onAddAuthorToSelection" prefWidth="40"/>
+                        <Button text="➖" onAction="#onRemoveAuthorFromSelection" prefWidth="40"/>
+                    </VBox>
+
+                    <!-- selected authors -->
+                    <ListView fx:id="selectedAuthorsList"
+                              prefHeight="170"
+                              GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+                    <!-- create author -->
+                    <Button text="➕ Nowy autor"
+                            onAction="#onCreateAuthor"
+                            GridPane.columnIndex="0" GridPane.rowIndex="2"
+                            GridPane.columnSpan="3"/>
+                </GridPane>
+
+                <!-- ===== Row 3: Genre ===== -->
+                <Label text="Genre" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="genreCombo"
+                          prefWidth="260"
+                          GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <!-- ===== Row 4: Year ===== -->
+                <Label text="Year" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="yearField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <!-- ===== Row 5: ISBN ===== -->
+                <Label text="ISBN" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="isbnField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <!-- ===== Row 6: Pages ===== -->
+                <Label text="Number of pages" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <TextField fx:id="pagesField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                <!-- ===== Row 7: Series ===== -->
+                <Label text="Seria" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <TextField fx:id="seriesField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
             </GridPane>
 
             <Label fx:id="errorLabel" styleClass="error-label" visible="false"/>
+
         </VBox>
     </content>
+
     <buttonTypes>
         <ButtonType fx:constant="CANCEL"/>
         <ButtonType text="Save" fx:id="saveButtonType" buttonData="OK_DONE"/>
     </buttonTypes>
+
 </DialogPane>

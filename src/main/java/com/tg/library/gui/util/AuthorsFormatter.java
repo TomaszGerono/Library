@@ -18,7 +18,7 @@ public final class AuthorsFormatter {
                 .collect(java.util.stream.Collectors.joining(", "));
     }
 
-    private static String formatAuthorName(Authors a) {
+    public static String formatAuthorName(Authors a) {
         if (a == null) return "";
 
         String first = safeTrim(a.getFirstName());

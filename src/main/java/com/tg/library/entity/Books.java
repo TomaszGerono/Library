@@ -90,8 +90,8 @@ public class Books implements Serializable {
     @Column(name = "pages_count")
     private Integer pagesCount;
 
-    @Column(name = "notes")
-    private Integer notes;
+    @Column(name = "notes", columnDefinition = "TEXT")
+    private String notes;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "reading_progress")

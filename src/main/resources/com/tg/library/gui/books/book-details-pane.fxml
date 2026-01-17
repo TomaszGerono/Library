@@ -1,52 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:controller="com.tg.library.gui.controller.BookDetailsController"
-      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tg.library.gui.controller.BookDetailsController">
+
     <padding>
-        <Insets bottom="10" left="10" right="10" top="10"/>
+        <Insets top="12" right="12" bottom="12" left="12"/>
     </padding>
-    <Label text="Details"/>
-    <GridPane hgap="8" vgap="8">
-        <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <Label fx:id="titleValue" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-        <Label text="Author:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <Label fx:id="authorValue" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Label text="Szczegóły książki" styleClass="section-title"/>
 
-        <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-        <ComboBox fx:id="statusCombo" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <GridPane hgap="10" vgap="8">
         <columnConstraints>
-            <ColumnConstraints/>
-            <ColumnConstraints/>
+            <ColumnConstraints minWidth="110" hgrow="NEVER"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
         </columnConstraints>
-        <rowConstraints>
-            <RowConstraints/>
-            <RowConstraints/>
-            <RowConstraints/>
-        </rowConstraints>
+
+        <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label fx:id="titleValue" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Author(s):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label fx:id="authorsValue" wrapText="true" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Year:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Label fx:id="yearValue" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Genre:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Label fx:id="genreValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Status:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="statusCombo" prefWidth="220" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
     </GridPane>
 
-    <Label text="Notes"/>
-    <TextArea fx:id="notesArea" prefRowCount="8"/>
+    <Label text="Notes:"/>
+    <TextArea fx:id="notesArea" prefRowCount="8" wrapText="true"/>
 
-    <HBox spacing="8">
-        <Button fx:id="saveNotesBtn" text="➕ Save notes">
-            <opaqueInsets>
-                <Insets/>
-            </opaqueInsets>
-        </Button>
+    <HBox spacing="10">
+        <Button fx:id="saveNotesBtn" text="Save" onAction="#onSaveNotes"/>
+        <Label fx:id="saveInfoLabel"/>
         <Pane HBox.hgrow="ALWAYS"/>
     </HBox>
 
-    <Separator/>
-    <Label text="Topics"/>
-    <ListView fx:id="topicsList"/>
-    <HBox spacing="8">
-        <Button text="Add to topic"/>
-        <Button text="Delete from topic"/>
-    </HBox>
 </VBox>

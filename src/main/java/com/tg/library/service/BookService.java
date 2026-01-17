@@ -45,4 +45,9 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    @Transactional
+    public void deleteById(Long id) {
+        bookRepository.deleteById(id);
+    }
+
 }
