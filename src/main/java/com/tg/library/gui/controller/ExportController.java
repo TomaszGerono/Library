@@ -52,42 +52,49 @@ public class ExportController {
     }
 
     /**
-     * Logic to trigger the Python script using ProcessBuilder
+     * Logic to export from SQLite to CSV
      */
     @FXML
     public void onConfirmExport() {
         if (targetFile == null) return;
 
-        // 1. Determine OS-specific Python path for your .venv
-        String os = System.getProperty("os.name").toLowerCase();
-        String pythonExec = os.contains("win") ? ".venv/Scripts/python.exe" : ".venv/bin/python";
+        var projectDir = System.getProperty("user.dir");
+        var dbPath = Paths.get(projectDir, "sqlite", "db", "library.db").toAbsolutePath().toString();
+        String sqliteExe;
 
-        // 2. Define paths for your script and database
-        // Assuming your DB is at the root in /sqlite/db/library.db
-        String dbPath = Paths.get("sqlite", "db", "library.db").toAbsolutePath().toString();
-        String scriptPath = Paths.get("src", "main", "resources", "scripts", "export_script.py").toAbsolutePath().toString();
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            // Assume you have sqlite3.exe in your project or PATH
+            sqliteExe = "sqlite3";
+        } else {
+            sqliteExe = "sqlite3"; // Standard on Linux
+        }
 
         try {
+            // 2. Build the command
+            // sqlite3 -header -csv "path/to/db" "select * from books;" > "path/to/output.csv"
             ProcessBuilder pb = new ProcessBuilder(
-                    pythonExec,
-                    scriptPath,
+                    sqliteExe,
+                    "-header",
+                    "-csv",
                     dbPath,
-                    "books",
-                    targetFile.getAbsolutePath()
+                    "SELECT * FROM books;" // Your query
             );
 
-            // Redirect output to IntelliJ console for debugging
-            pb.inheritIO();
-            pb.start();
+            // 3. Redirect output directly to the file the user selected
+            pb.redirectOutput(targetFile);
 
-            System.out.println("Python process started for: " + targetFile.getName());
+            Process p = pb.start();
+            int exitCode = p.waitFor();
 
-            // Close the window after successfully starting the process
-            onCancel();
+            if (exitCode == 0) {
+                System.out.println("Export Successful: " + targetFile.getAbsolutePath());
+                onCancel(); // Close window
+            } else {
+                System.err.println("Export failed with code: " + exitCode);
+            }
 
-        } catch (IOException e) {
-            System.err.println("Failed to launch Python: " + e.getMessage());
-            // In a real app, you would use Dialogs.error() here
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
