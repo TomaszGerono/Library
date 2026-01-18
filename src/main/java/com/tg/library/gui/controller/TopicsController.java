@@ -1,124 +1,138 @@
 package com.tg.library.gui.controller;
 
-import com.tg.library.AppContext;
 import com.tg.library.entity.Books;
 import com.tg.library.entity.Progress;
-import com.tg.library.gui.view.TopicsViewModel;
+import com.tg.library.entity.Topics;
+import com.tg.library.gui.util.AuthorsFormatter;
+import com.tg.library.service.BookService;
+import com.tg.library.service.TopicService;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Objects;
+
+@Log4j2
 @Component
 public class TopicsController {
-    private AppContext ctx;
-    private TopicsViewModel topicsViewModel;
 
-//    @FXML private ListView<Section> topicsList;
-    @FXML private Button renameBtn;
-    @FXML private Button deleteBtn;
+    private final TopicService topicsService;
+    private final BookService bookService;
+
+    @Autowired
+    public TopicsController(TopicService topicsService, BookService bookService) {
+        this.topicsService = topicsService;
+        this.bookService = bookService;
+    }
+
+    @FXML private ListView<Topics> topicsList;
 
     @FXML private TableView<Books> booksTable;
     @FXML private TableColumn<Books, String> titleCol;
     @FXML private TableColumn<Books, String> authorCol;
     @FXML private TableColumn<Books, Progress> statusCol;
 
+    @FXML private Button deleteBtn;
     @FXML private Button addBookBtn;
     @FXML private Button removeBookBtn;
 
-    public void setContext(AppContext ctx) { this.ctx = ctx; }
+    @FXML
+    public void initialize() {
+        // jak ma się wyświetlać element w liście (żeby nie był toString)
+        topicsList.setCellFactory(lv -> new ListCell<>() {
+            @Override protected void updateItem(Topics t, boolean empty) {
+                super.updateItem(t, empty);
+                setText(empty || t == null ? null : safe(t.getName()));
+            }
+        });
 
-    public void afterContextInjected() {
-//        this.shelvesViewModel = new ShelvesViewModel(ctx.topics(), ctx.books());
-//        shelvesViewModel.load();
-//
-//        shelvesList.setItems(shelvesViewModel.topics());
-//        shelvesList.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> {
-//            shelvesViewModel.setSelectedShelf(n);
-//            renameBtn.setDisable(n == null);
-//            deleteBtn.setDisable(n == null);
-//            addBookBtn.setDisable(n == null);
-//        });
-//
-//        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-//        authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
-//        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
-//
-//        booksTable.setItems(shelvesViewModel.shelfBooks());
-//        booksTable.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> {
-//            shelvesViewModel.setSelectedBook(n);
-//            removeBookBtn.setDisable(n == null || shelvesViewModel.selectedShelfProperty().get() == null);
-//        });
-//
-//        renameBtn.setDisable(true);
-//        deleteBtn.setDisable(true);
-//        addBookBtn.setDisable(true);
-//        removeBookBtn.setDisable(true);
+        // tabela książek
+        titleCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(safe(cd.getValue().getTitle())));
+        authorCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(
+                AuthorsFormatter.formatAuthors(cd.getValue().getAuthors())
+        ));
+        statusCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleObjectProperty<>(cd.getValue().getReadingProgress()));
+
+        // reaguj na wybór topicu
+        topicsList.getSelectionModel().selectedItemProperty().addListener((obs, old, topic) -> {
+            if (topic == null) {
+                booksTable.getItems().clear();
+                setButtonsDisabled(true);
+                return;
+            }
+            setButtonsDisabled(false);
+            loadBooksForTopicAsync(topic.getId());
+        });
+
+        setButtonsDisabled(true);
+        loadTopicsAsync();
     }
 
-    @FXML
-    public void onAddShelf() {
-//        Optional<String> name = Dialogs.promptText("Nowa półka", "Podaj nazwę półki:");
-//        name.map(String::trim).filter(s -> !s.isBlank()).ifPresent(n -> {
-//            try { vm.addShelf(n); }
-//            catch (Exception e) { Dialogs.error("Nie udało się dodać półki", e.getMessage()); }
-//        });
+    private void setButtonsDisabled(boolean disabled) {
+        deleteBtn.setDisable(disabled);
+        addBookBtn.setDisable(disabled);
+        removeBookBtn.setDisable(disabled);
     }
 
-    @FXML
-    public void onRenameShelf() {
-//        Shelf s = vm.selectedShelfProperty().get();
-//        if (s == null) return;
-//
-//        Optional<String> name = Dialogs.promptText("Zmień nazwę", "Nowa nazwa półki:", s.getName());
-//        name.map(String::trim).filter(x -> !x.isBlank()).ifPresent(n -> {
-//            try { vm.renameShelf(s.getId(), n); }
-//            catch (Exception e) { Dialogs.error("Nie udało się zmienić nazwy", e.getMessage()); }
-//        });
+    private void loadTopicsAsync() {
+        Task<List<Topics>> task = new Task<>() {
+            @Override protected List<Topics> call() {
+                return topicsService.findAll();
+            }
+        };
+        task.setOnSucceeded(e -> {
+            var list = task.getValue() == null ? List.<Topics>of() : task.getValue().stream().filter(Objects::nonNull).toList();
+            topicsList.setItems(FXCollections.observableArrayList(list));
+
+            // zaznacz pierwszy topic po załadowaniu
+            Platform.runLater(() -> {
+                if (!topicsList.getItems().isEmpty()) {
+                    topicsList.getSelectionModel().selectFirst();
+                }
+            });
+        });
+        task.setOnFailed(e -> showError("Loading topics failed", task.getException()));
+        Thread t = new Thread(task, "fx-load-topics");
+        t.setDaemon(true);
+        t.start();
     }
 
-    @FXML
-    public void onDeleteShelf() {
-//        Shelf s = vm.selectedShelfProperty().get();
-//        if (s == null) return;
-//
-//        boolean ok = Dialogs.confirm("Usunąć półkę?", "Czy na pewno usunąć półkę: " + s.getName() + " ?");
-//        if (!ok) return;
-//
-//        try { vm.deleteShelf(s.getId()); }
-//        catch (Exception e) { Dialogs.error("Nie udało się usunąć półki", e.getMessage()); }
+    private void loadBooksForTopicAsync(Long topicId) {
+        Task<List<Books>> task = new Task<>() {
+            @Override protected List<Books> call() {
+                return topicsService.findBooksByTopicId(topicId);
+            }
+        };
+        task.setOnSucceeded(e -> {
+            var books = task.getValue() == null ? List.<Books>of() : task.getValue().stream().filter(Objects::nonNull).toList();
+            booksTable.setItems(FXCollections.observableArrayList(books));
+        });
+        task.setOnFailed(e -> showError("Loading books for topic failed", task.getException()));
+        Thread t = new Thread(task, "fx-load-topic-books");
+        t.setDaemon(true);
+        t.start();
     }
 
-    @FXML
-    public void onAddBookToShelf() {
-//        Shelf s = vm.selectedShelfProperty().get();
-//        if (s == null) return;
-//
-//        // prosta lista wyboru (w produkcji: dialog z wyszukiwaniem)
-//        ChoiceDialog<Book> dialog = new ChoiceDialog<>();
-//        dialog.setTitle("Dodaj książkę");
-//        dialog.setHeaderText("Wybierz książkę do dodania na półkę: " + s.getName());
-//        dialog.getItems().setAll(vm.allBooks());
-//        dialog.setConverter(new javafx.util.StringConverter<>() {
-//            @Override public String toString(Book b) { return b == null ? "" : b.getTitle() + " — " + b.getAuthor(); }
-//            @Override public Book fromString(String string) { return null; }
-//        });
-//
-//        dialog.showAndWait().ifPresent(b -> {
-//            try { vm.addBookToShelf(s.getId(), b.getId()); }
-//            catch (Exception e) { Dialogs.error("Nie udało się dodać książki", e.getMessage()); }
-//        });
-    }
+    // Handlery – na razie mogą być puste
+    @FXML private void onAddTopic() {}
+    @FXML private void onDeleteTopic() {}
+    @FXML private void onAddBookToTopic() {}
+    @FXML private void onRemoveBookFromTopic() {}
 
-    @FXML
-    public void onRemoveBookFromShelf() {
-//        Shelf s = vm.selectedShelfProperty().get();
-//        Book b = vm.selectedBookProperty().get();
-//        if (s == null || b == null) return;
-//
-//        try { vm.removeBookFromShelf(s.getId(), b.getId()); }
-//        catch (Exception e) { Dialogs.error("Nie udało się usunąć książki z półki", e.getMessage()); }
+    private static String safe(String s) { return s == null ? "" : s; }
+
+    private void showError(String title, Throwable ex) {
+        log.error(ex);
+        Alert a = new Alert(Alert.AlertType.ERROR);
+        a.setTitle(title);
+        a.setHeaderText(title);
+        a.setContentText(ex == null ? "" : ex.getMessage());
+        a.showAndWait();
     }
 }
-
