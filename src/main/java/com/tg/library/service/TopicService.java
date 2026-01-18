@@ -40,4 +40,19 @@ public class TopicService {
         return topicsRepository.findBooksByTopicId(topicId);
     }
 
+    @Transactional
+    public Topics add(Topics topic) {
+        var newTopic = topicsRepository.saveAndFlush(topic);
+        return newTopic;
+    }
+
+    public void deleteTopic(Long topicId) {
+        topicsRepository.delete(new Topics().builder().id(topicId).build());
+    }
+
+    @Transactional
+    public void removeBookFromTopic(Long bookId, Long topicId) {
+        topicsRepository.unlinkBookFromTopic(bookId, topicId);
+    }
+
 }

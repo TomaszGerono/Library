@@ -34,14 +34,11 @@
     -fx-text-fill: #b00020;
 }
 
-/* ===== Books view emphasis (bez klas) ===== */
-
 #booksRoot {
     -fx-background-color: transparent;
     -fx-padding: 12;
 }
 
-/* Tło dla top (filtry) i bottom (akcje) – wygląda jak karta */
 #booksRoot .filters-bar,
 #booksRoot .tool-bar {
     -fx-background-color: white;
@@ -58,7 +55,6 @@
     -fx-padding: 8 10;
 }
 
-/* Tabela – mocniej “app-like” */
 #booksRoot .table-view {
     -fx-background-color: white;
     -fx-border-color: #dcdfe3;
@@ -66,19 +62,16 @@
     -fx-background-radius: 8;
 }
 
-/* Nagłówek tabeli */
 #booksRoot .table-view .column-header-background {
     -fx-background-color: linear-gradient(to bottom, #eef6ff, #eaf2fb);
     -fx-background-insets: 0;
     -fx-background-radius: 8 8 0 0;
 }
 
-/* Wiersze: delikatny hover */
 #booksRoot .table-row-cell:filled:hover {
     -fx-background-color: #f0f7ff;
 }
 
-/* Wiersz zaznaczony */
 #booksRoot .table-row-cell:filled:selected {
     -fx-background-color: #3a9bd5;
 }
@@ -86,7 +79,6 @@
     -fx-fill: white;
 }
 
-/* Akcent na przyciskach w Books (bez klas) */
 #booksRoot #addBtn {
     -fx-background-color: #4caf50;
     -fx-text-fill: white;
@@ -111,7 +103,6 @@
 }
 #booksRoot #removeBtn:hover { -fx-background-color: #d44133; }
 
-/* Licznik wyników trochę “badge” */
 #booksRoot #resultCountLabel {
     -fx-padding: 4 10;
     -fx-background-color: #eef3f8;
@@ -130,7 +121,6 @@
     -fx-background-radius: 8;
 }
 
-/* Kolory wierszy wg Progress */
 .table-row-cell:unread {
     -fx-background-color: #fff4e5;
 }
@@ -143,7 +133,6 @@
     -fx-background-color: #e9f8ef;
 }
 
-/* Zaznaczenie ma priorytet */
 .table-row-cell:filled:selected {
     -fx-background-color: #3a9bd5;
 }
@@ -158,7 +147,7 @@
     -fx-background-color: derive(-fx-background-color, -5%);
 }
 
-/* ===== OVERVIEW ONLY ===== */
+
 
 .overview-root .app-title {
     -fx-font-size: 22px;
@@ -193,7 +182,6 @@
     -fx-text-fill: #1f2937;
 }
 
-/* tylko listy w Overview */
 .overview-root .list-view {
     -fx-background-radius: 12;
     -fx-border-radius: 12;
@@ -228,3 +216,56 @@
     -fx-text-fill: #374151;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 4, 0, 0, 1);
 }
+
+
+#topicsRoot {
+    -fx-padding: 12;
+}
+
+#topicsRoot .split-pane {
+    -fx-background-color: transparent;
+}
+
+#topicsRoot .list-view,
+#topicsRoot .table-view {
+    -fx-background-color: white;
+    -fx-border-color: #dcdfe3;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+#topicsRoot .list-cell:filled:hover {
+    -fx-background-color: #f0f7ff;
+}
+
+#topicsRoot .list-cell:filled:selected {
+    -fx-background-color: #3a9bd5;
+}
+#topicsRoot .list-cell:filled:selected .text {
+    -fx-fill: white;
+}
+
+
+#topicsRoot #addTopicBtn,
+#topicsRoot #addBookBtn {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
+}
+#topicsRoot #addTopicBtn:hover,
+#topicsRoot #addBookBtn:hover {
+    -fx-background-color: #449d48;
+}
+
+#topicsRoot #deleteBtn,
+#topicsRoot #removeBookBtn {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+}
+#topicsRoot #deleteBtn:hover,
+#topicsRoot #removeBookBtn:hover {
+    -fx-background-color: #d44133;
+}
+
+#topicsRoot .button:disabled {
+    -fx-opacity: 0.55;
+}o
