@@ -236,9 +236,9 @@ public class BooksController {
             booksTable.refresh();
         });
 
-        SelectionBus.INSTANCE.booksChangedProperty().addListener((obs, oldV, newV) -> {
-            loadAsync();
-        });
+//        SelectionBus.INSTANCE.booksChangedProperty().addListener((obs, oldV, newV) -> {
+//            loadAsync();
+//        });
         LOG.info("BooksController initialized");
     }
 
