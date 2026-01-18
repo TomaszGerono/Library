@@ -50,22 +50,28 @@ public class BooksViewTest extends ApplicationTest {
         genresServiceMock = Mockito.mock(GenresService.class);
         authorServiceMock = Mockito.mock(AuthorService.class);
 
-        // 2️⃣ kontroler z mockiem
+        // kontroler z mockiem
         controller = new BooksController(bookServiceMock, genresServiceMock, authorServiceMock);
 
-        // 3️⃣ załaduj FXML z kontrolerem
+        //  załaduj FXML z kontrolerem
         URL fxml = getClass().getResource("/com/tg/library/gui/books/books-view.fxml");
         assertNotNull(fxml, "books-view.fxml not found");
 
         FXMLLoader loader = new FXMLLoader(fxml);
         loader.setControllerFactory(type -> {
             if (type == BooksController.class) return controller;
+            if (type == com.tg.library.gui.controller.BookDetailsController.class) {
+                return new com.tg.library.gui.controller.BookDetailsController(bookServiceMock);
+            }
             try {
                 return type.getDeclaredConstructor().newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
+
+
+
         });
 
         Parent root = loader.load();
@@ -78,7 +84,7 @@ public class BooksViewTest extends ApplicationTest {
         TableView<?> table = lookup("#booksTable").queryAs(TableView.class);
 
         waitUntil(() -> table.getItems().size() == 3);
-
+        sleep(10000);
         assertEquals(3, table.getItems().size());
         verify(bookServiceMock, times(1)).findAll();
     }
@@ -89,7 +95,7 @@ public class BooksViewTest extends ApplicationTest {
         waitUntil(() -> table.getItems().size() == 3);
 
         clickOn("#titleFilter").write("Clean");
-        //sleep(5000);
+        sleep(10000);
 
         assertEquals(2, table.getItems().size());
         assertTrue(((Books) table.getItems().get(0)).getTitle().contains("Clean"));

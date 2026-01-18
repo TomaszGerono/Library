@@ -297,8 +297,8 @@ public class TopicsController {
         Task<Void> task = new Task<>() {
             @Override protected Void call() {
                 // wybierz jedną z metod w serwisie:
-                topicsService.deleteTopic(topicId); // jeśli robisz deleteLinks + deleteById
-                // topicService.deleteById(topicId); // jeśli wystarcza
+                topicsService.deleteTopic(topicId);
+                // topicService.deleteById(topicId);
                 return null;
             }
         };

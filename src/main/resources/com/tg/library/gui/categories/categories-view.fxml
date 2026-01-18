@@ -9,13 +9,13 @@
             fx:controller="com.tg.library.gui.controller.CategorizationController"
             id="categorizationRoot">
 
-    <top>
-        <ToolBar>
-            <Label text="Categorisation"/>
-            <Pane HBox.hgrow="ALWAYS"/>
-            <Button text="⟳ Refresh" onAction="#onRefresh"/>
-        </ToolBar>
-    </top>
+<!--    <top>-->
+<!--        <ToolBar>-->
+<!--            <Label text="Categorisation"/>-->
+<!--            <Pane HBox.hgrow="ALWAYS"/>-->
+<!--            <Button text="⟳ Refresh" onAction="#onRefresh"/>-->
+<!--        </ToolBar>-->
+<!--    </top>-->
 
     <center>
         <SplitPane dividerPositions="0.32">

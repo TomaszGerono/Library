@@ -1,13 +1,13 @@
 -- Clear existing data (optional, uncomment if needed)
-DELETE FROM book_authors;
-DELETE FROM book_topics;
-DELETE FROM books;
-DELETE FROM authors;
-DELETE FROM genres;
-DELETE FROM categories;
-DELETE FROM topics;
-DELETE FROM publishers;
-DELETE FROM series;
+-- DELETE FROM book_authors;
+-- DELETE FROM book_topics;
+-- DELETE FROM books;
+-- DELETE FROM authors;
+-- DELETE FROM genres;
+-- DELETE FROM categories;
+-- DELETE FROM topics;
+-- DELETE FROM publishers;
+-- DELETE FROM series;
 
 -- Initialize sequence tables
 INSERT INTO authors_seq (next_val) VALUES (100);

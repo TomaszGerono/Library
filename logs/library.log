@@ -2547,3 +2547,64 @@
 2026-01-18 19:21:29 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=50 nonNull=50
 2026-01-18 19:23:08 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
 2026-01-18 19:23:09 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=50 nonNull=50
+2026-01-18 19:26:02 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:26:03 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=50 nonNull=50
+2026-01-18 19:28:39 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Starting BookServiceBusinessRulesTest using Java 23.0.2 with PID 12432 (started by Tomasz in C:\Projects\Library4\Library)
+2026-01-18 19:28:39 DEBUG com.tg.library.businessrules.BookServiceBusinessRulesTest - Running with Spring Boot v4.0.0, Spring v7.0.1
+2026-01-18 19:28:39 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - The following 1 profile is active: "test"
+2026-01-18 19:28:42 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Started BookServiceBusinessRulesTest in 3.428 seconds (process running for 4.886)
+2026-01-18 19:30:36 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Starting BookServiceBusinessRulesTest using Java 23.0.2 with PID 6092 (started by Tomasz in C:\Projects\Library4\Library)
+2026-01-18 19:30:36 DEBUG com.tg.library.businessrules.BookServiceBusinessRulesTest - Running with Spring Boot v4.0.0, Spring v7.0.1
+2026-01-18 19:30:36 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - The following 1 profile is active: "test"
+2026-01-18 19:32:05 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Starting BookServiceBusinessRulesTest using Java 23.0.2 with PID 19540 (started by Tomasz in C:\Projects\Library4\Library)
+2026-01-18 19:32:05 DEBUG com.tg.library.businessrules.BookServiceBusinessRulesTest - Running with Spring Boot v4.0.0, Spring v7.0.1
+2026-01-18 19:32:05 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - The following 1 profile is active: "test"
+2026-01-18 19:32:08 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Started BookServiceBusinessRulesTest in 3.261 seconds (process running for 4.544)
+2026-01-18 19:33:31 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Starting BookServiceBusinessRulesTest using Java 23.0.2 with PID 1304 (started by Tomasz in C:\Projects\Library4\Library)
+2026-01-18 19:33:31 DEBUG com.tg.library.businessrules.BookServiceBusinessRulesTest - Running with Spring Boot v4.0.0, Spring v7.0.1
+2026-01-18 19:33:31 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - The following 1 profile is active: "test"
+2026-01-18 19:33:34 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Started BookServiceBusinessRulesTest in 3.494 seconds (process running for 4.785)
+2026-01-18 19:34:38 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Starting BookServiceBusinessRulesTest using Java 23.0.2 with PID 18396 (started by Tomasz in C:\Projects\Library4\Library)
+2026-01-18 19:34:38 DEBUG com.tg.library.businessrules.BookServiceBusinessRulesTest - Running with Spring Boot v4.0.0, Spring v7.0.1
+2026-01-18 19:34:38 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - The following 1 profile is active: "test"
+2026-01-18 19:34:41 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Started BookServiceBusinessRulesTest in 3.391 seconds (process running for 4.653)
+2026-01-18 19:42:41 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:42:42 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:42:42 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:42:42 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:43:29 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:43:29 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:43:30 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:43:30 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:43:57 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:43:57 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:43:58 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:43:58 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:44:28 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:44:28 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:44:29 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:44:29 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:45:09 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:45:09 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:45:21 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:45:21 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:48:39 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:48:39 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:48:51 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:48:51 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:48:57 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:48:58 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:49:09 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:49:09 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=3 nonNull=3
+2026-01-18 19:49:24 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Starting BookServiceBusinessRulesTest using Java 23.0.2 with PID 20436 (started by Tomasz in C:\Projects\Library4\Library)
+2026-01-18 19:49:24 DEBUG com.tg.library.businessrules.BookServiceBusinessRulesTest - Running with Spring Boot v4.0.0, Spring v7.0.1
+2026-01-18 19:49:24 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - The following 1 profile is active: "test"
+2026-01-18 19:49:27 INFO  com.tg.library.businessrules.BookServiceBusinessRulesTest - Started BookServiceBusinessRulesTest in 3.374 seconds (process running for 4.597)
+2026-01-18 19:50:30 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:50:30 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=50 nonNull=50
+2026-01-18 19:50:55 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 19:50:55 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=50 nonNull=50
+2026-01-18 20:58:18 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 20:58:18 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=50 nonNull=50
+2026-01-18 21:08:13 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 21:08:13 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=50 nonNull=50
