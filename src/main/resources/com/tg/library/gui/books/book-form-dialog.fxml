@@ -11,16 +11,13 @@
 
             <GridPane hgap="10" vgap="10">
 
-                <!-- ===== Row 0: Title ===== -->
                 <Label text="Title *" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                 <TextField fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                <!-- ===== Row 1: Authors label ===== -->
-                <Label text="Autor(s)"
+                <Label text="Author(s)"
                        GridPane.rowIndex="1" GridPane.columnIndex="0"
                        GridPane.columnSpan="2"/>
 
-                <!-- ===== Row 2: Authors section ===== -->
                 <GridPane hgap="10" vgap="8"
                           GridPane.rowIndex="2" GridPane.columnIndex="0"
                           GridPane.columnSpan="2">
@@ -43,7 +40,7 @@
                                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
 
                     <!-- selected label right -->
-                    <Label text="Wybrani"
+                    <Label text="Chosen"
                            GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
                     <!-- available authors -->
@@ -64,32 +61,27 @@
                               GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
                     <!-- create author -->
-                    <Button text="➕ Nowy autor"
+                    <Button text="➕ New author"
                             onAction="#onCreateAuthor"
                             GridPane.columnIndex="0" GridPane.rowIndex="2"
                             GridPane.columnSpan="3"/>
                 </GridPane>
 
-                <!-- ===== Row 3: Genre ===== -->
                 <Label text="Genre" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                 <ComboBox fx:id="genreCombo"
                           prefWidth="260"
                           GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                <!-- ===== Row 4: Year ===== -->
                 <Label text="Year" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                 <TextField fx:id="yearField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-                <!-- ===== Row 5: ISBN ===== -->
                 <Label text="ISBN" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
                 <TextField fx:id="isbnField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                <!-- ===== Row 6: Pages ===== -->
                 <Label text="Number of pages" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
                 <TextField fx:id="pagesField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-                <!-- ===== Row 7: Series ===== -->
-                <Label text="Seria" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <Label text="Series" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
                 <TextField fx:id="seriesField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
             </GridPane>

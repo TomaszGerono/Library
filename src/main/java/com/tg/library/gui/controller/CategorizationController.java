@@ -81,7 +81,7 @@ public class CategorizationController {
             return new javafx.beans.property.SimpleStringProperty(g == null ? "" : safe(g.getName()));
         });
         seriesCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(
-                cd.getValue().getSerie() == null ? "" : String.valueOf(cd.getValue().getSerie())
+                cd.getValue().getSerie() == null ? "" : String.valueOf(cd.getValue().getSerie().getSeriesName())
         ));
         yearCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleObjectProperty<>(cd.getValue().getPublicationYear()));
         statusCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleObjectProperty<>(cd.getValue().getReadingProgress()));
@@ -157,13 +157,13 @@ public class CategorizationController {
             }
             case SERIES -> {
                 for (Books b : masterBooks) {
-                    if (b.getSerie() != null) groups.add("Series " + b.getSerie().getSeriesName());
+                    if (b.getSerie() != null) groups.add(b.getSerie().getSeriesName());
                     else groups.add("(no series)");
                 }
             }
         }
 
-        groupsSource.setAll(groups);          // <-- KLUCZOWA ZMIANA
+        groupsSource.setAll(groups);
         applyGroupFilter(groupSearchField.getText());
         groupsCountLabel.setText("Groups: " + filteredGroups.size());
 
@@ -202,7 +202,13 @@ public class CategorizationController {
                     result = masterBooks.stream().filter(b -> b.getSerie() == null).toList();
                 } else {
                     Integer id = parseSeriesId(groupKey);
-                    result = masterBooks.stream().filter(b -> Objects.equals(b.getSerie(), id)).toList();
+                    result = masterBooks.stream()
+                            .filter(b -> java.util.Optional.ofNullable(b.getSerie())
+                                    .map(s -> s.getSeriesName())
+                                    .filter(name -> name.equals(groupKey))
+                                    .isPresent()
+                            )
+                            .toList();
                 }
             }
 

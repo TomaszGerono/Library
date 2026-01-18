@@ -101,16 +101,16 @@ public class BooksViewTest extends ApplicationTest {
         assertTrue(((Books) table.getItems().get(0)).getTitle().contains("Clean"));
     }
 
-//    @Test
-//    void shouldFilterByAuthor() {
-//        TableView<?> table = lookup("#booksTable").queryAs(TableView.class);
-//        waitUntil(() -> table.getItems().size() == 3);
-//
-//        clickOn("#authorFilter").write("Martin");
-//        sleep(300);
-//
-//        assertEquals(1, table.getItems().size());
-//    }
+    @Test
+    void shouldFilterByAuthor() {
+        TableView<?> table = lookup("#booksTable").queryAs(TableView.class);
+        waitUntil(() -> table.getItems().size() == 3);
+
+        clickOn("#authorFilter").write("Martin");
+        sleep(300);
+
+        assertEquals(2, table.getItems().size());
+    }
 
     // ---------- helper ----------
 
@@ -118,7 +118,7 @@ public class BooksViewTest extends ApplicationTest {
         long start = System.currentTimeMillis();
         while (System.currentTimeMillis() - start < 4000) {
             if (cond.getAsBoolean()) return;
-            //sleep(5000);
+            sleep(5000);
         }
         fail("Condition not met in time");
     }

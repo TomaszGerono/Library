@@ -28,7 +28,7 @@ class BookServiceBusinessRulesTest {
     void shouldAllowBookWithoutAuthors() {
         Books b = new Books();
         b.setTitle("No Author Book");
-        b.setAuthors(List.of()); // albo null, zależnie jak ustalasz kontrakt
+        b.setAuthors(List.of());
 
         Books saved = bookService.add(b);
 

@@ -42,11 +42,14 @@
         <Label text="Publisher:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
         <Label fx:id="publisherValue" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-        <Label text="Series:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-        <Label fx:id="seriesValue" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+        <Label text="No. of pages:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <Label fx:id="pagesValue" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
-        <Label text="Status:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="statusCombo" prefWidth="220" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+        <Label text="Series:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+        <Label fx:id="seriesValue" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+        <Label text="Status:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="statusCombo" prefWidth="220" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
     </GridPane>
 
     <Pane minHeight="12"/>

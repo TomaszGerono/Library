@@ -2,6 +2,7 @@ package com.tg.library.gui.controller;
 
 import com.tg.library.entity.Books;
 import com.tg.library.entity.Progress;
+import com.tg.library.entity.Publishers;
 import com.tg.library.gui.util.AuthorsFormatter;
 import com.tg.library.gui.view.BooksViewModel;
 import com.tg.library.gui.view.SelectionBus;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.springframework.stereotype.Component;
 
+import java.awt.print.Book;
 import java.util.Optional;
 
 @Component
@@ -32,6 +34,7 @@ public class BookDetailsController {
     @FXML private Label monasteryValue;
     @FXML private Label publisherValue;
     @FXML private Label seriesValue;
+    @FXML private Label pagesValue;
     @FXML private ComboBox<Progress> statusCombo;
     @FXML private TextArea notesArea;
     @FXML private Button saveNotesBtn;
@@ -150,7 +153,12 @@ public class BookDetailsController {
 
             isbnValue.setText(book.getIsbn());
             monasteryValue.setText(book.getMonastery());
-            publisherValue.setText(book.getPublisher().getName());
+            publisherValue.setText(
+                    Optional.ofNullable(book)
+                            .map(Books::getPublisher)
+                            .map(Publishers::getName)
+                            .orElse("")
+            );
             seriesValue.setText(
                     Optional.ofNullable(book.getSerie())
                             .map(s -> s.getSeriesName())
@@ -160,6 +168,9 @@ public class BookDetailsController {
             statusCombo.setDisable(false);
             statusCombo.setValue(book.getReadingProgress());
 
+            pagesValue.setText(Optional.ofNullable(book.getPagesCount())
+                    .map(s -> s.toString())
+                    .orElse(""));
             notesArea.setDisable(false);
             notesArea.setText(book.getNotes() == null ? "" : book.getNotes());
 
