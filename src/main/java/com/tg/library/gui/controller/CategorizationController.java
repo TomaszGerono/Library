@@ -1,10 +1,11 @@
 package com.tg.library.gui.controller;
 
-import com.tg.library.entity.Progress;
 import com.tg.library.entity.Books;
+import com.tg.library.entity.Genres;
+import com.tg.library.entity.Progress;
+import com.tg.library.gui.view.GroupBy;
 import com.tg.library.service.BookService;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -18,10 +19,12 @@ import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+
+import static com.tg.library.gui.util.AuthorsFormatter.formatAuthors;
 
 @Component
 public class CategorizationController {
@@ -32,20 +35,11 @@ public class CategorizationController {
         this.bookService = bookService;
     }
 
-    enum GroupBy {
-        GENRE("Genre"),
-        AUTHOR("Author"),
-        SERIES("Series");
-
-        final String label;
-        GroupBy(String label) { this.label = label; }
-        @Override public String toString() { return label; }
-    }
-
-    @FXML private ComboBox<GroupBy> groupByCombo;
+    @FXML
+    private ComboBox<GroupBy> groupByCombo;
     @FXML private TextField groupSearchField;
-    @FXML private ListView<String> groupsList;
     @FXML private Label groupsCountLabel;
+    @FXML private ListView<String> groupsList;
 
     @FXML private Label selectedGroupLabel;
     @FXML private TableView<Books> booksTable;
@@ -56,36 +50,60 @@ public class CategorizationController {
     @FXML private TableColumn<Books, Integer> yearCol;
     @FXML private TableColumn<Books, Progress> statusCol;
 
-    private List<Books> allBooks = List.of();
-    private Map<String, List<Books>> grouped = Map.of();
+    private final List<Books> masterBooks = new ArrayList<>();
+   // private FilteredList<String> filteredGroups;
+
+    private final javafx.collections.ObservableList<String> groupsSource =
+            javafx.collections.FXCollections.observableArrayList();
+
+    private final javafx.collections.transformation.FilteredList<String> filteredGroups =
+            new javafx.collections.transformation.FilteredList<>(groupsSource, s -> true);
+
 
     @FXML
     public void initialize() {
-        // Kolumny (dla record/DTO: lambda)
-        titleCol.setCellValueFactory(d -> new SimpleStringProperty(nullSafe(d.getValue().getTitle())));
-        authorCol.setCellValueFactory(d -> new SimpleStringProperty(nullSafe(d.getValue().getTitle())));
-        genreCol.setCellValueFactory(d -> new SimpleStringProperty(nullSafe(d.getValue().getTitle())));
-        seriesCol.setCellValueFactory(d -> new SimpleStringProperty(nullSafe(d.getValue().getSeriesId().toString())));
-        yearCol.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue().getPublicationYear()));
-// TODO uncomment
-        //        statusCol.setCellValueFactory(d -> new SimpleObjectProperty<>(ReadingStatus.COMPLETED));
-
+        // combo
         groupByCombo.setItems(FXCollections.observableArrayList(GroupBy.values()));
         groupByCombo.getSelectionModel().select(GroupBy.GENRE);
 
-        groupByCombo.valueProperty().addListener((obs, o, n) -> regroupAndRender());
-        groupSearchField.textProperty().addListener((obs, o, n) -> renderGroupsList());
+        // groups list
+        //filteredGroups = new FilteredList<>(FXCollections.observableArrayList(), s -> true);
 
-        groupsList.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> {
-            if (n == null) {
+        groupsList.setItems(filteredGroups);
+
+        // tabela
+        titleCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(safe(cd.getValue().getTitle())));
+        authorCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(
+                formatAuthors(cd.getValue().getAuthors())
+        ));
+        genreCol.setCellValueFactory(cd -> {
+            Genres g = cd.getValue().getGenre();
+            return new javafx.beans.property.SimpleStringProperty(g == null ? "" : safe(g.getName()));
+        });
+        seriesCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(
+                cd.getValue().getSerie() == null ? "" : String.valueOf(cd.getValue().getSerie())
+        ));
+        yearCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleObjectProperty<>(cd.getValue().getPublicationYear()));
+        statusCol.setCellValueFactory(cd -> new javafx.beans.property.SimpleObjectProperty<>(cd.getValue().getReadingProgress()));
+
+        // zmiana typu grupowania
+        groupByCombo.valueProperty().addListener((obs, o, n) -> rebuildGroups());
+
+        // filtr grup
+        groupSearchField.textProperty().addListener((obs, o, n) -> applyGroupFilter(n));
+
+        // wybór grupy -> pokaż książki
+        groupsList.getSelectionModel().selectedItemProperty().addListener((obs, o, groupKey) -> {
+            if (groupKey == null) {
                 selectedGroupLabel.setText("Pick group on the left");
-                booksTable.setItems(FXCollections.observableArrayList());
+                booksTable.getItems().clear();
                 return;
             }
-            selectedGroupLabel.setText("Group: " + n);
-            booksTable.setItems(FXCollections.observableArrayList(grouped.getOrDefault(n, List.of())));
+            selectedGroupLabel.setText("Group: " + groupKey);
+            showBooksForGroup(groupKey);
         });
 
+        // load
         onRefresh();
     }
 
@@ -93,13 +111,16 @@ public class CategorizationController {
     public void onRefresh() {
         Task<List<Books>> task = new Task<>() {
             @Override protected List<Books> call() {
-                return bookService.findAll(); // dopasuj do swojej metody
+                return bookService.findAll();
             }
         };
 
         task.setOnSucceeded(e -> {
-            allBooks = task.getValue() == null ? List.of() : task.getValue();
-            regroupAndRender();
+            masterBooks.clear();
+            if (task.getValue() != null) {
+                masterBooks.addAll(task.getValue().stream().filter(Objects::nonNull).toList());
+            }
+            rebuildGroups();
         });
 
         task.setOnFailed(e -> showError("Refresh failed", task.getException()));
@@ -109,61 +130,99 @@ public class CategorizationController {
         t.start();
     }
 
-    private void regroupAndRender() {
-        GroupBy gb = groupByCombo.getValue() == null ? GroupBy.GENRE : groupByCombo.getValue();
+    private void rebuildGroups() {
+        GroupBy mode = groupByCombo.getValue();
+        if (mode == null) mode = GroupBy.GENRE;
 
-        // TODO uncomment !!!
-//        Function<Books, String> keyFn = switch (gb) {
-//            // TODO usunac toString
-//            case GENRE -> b -> normalizeKey(b.getGenreId().toString(), "(brak gatunku)");
-//            // TODO uncomment
-////            case AUTHOR -> b -> normalizeKey(b.getAlternateTitle(), "(brak autora)");
-//            case SERIES -> b -> normalizeKey(b.getSeriesId().toString(), "(brak serii)");
-//        };
+        String prev = groupsList.getSelectionModel().getSelectedItem();
 
-//        grouped = allBooks.stream()
-//                .collect(Collectors.groupingBy(keyFn));
+        Set<String> groups = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
-        // sortowanie grup alfabetycznie
-        grouped = grouped.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey(String.CASE_INSENSITIVE_ORDER))
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (a, b) -> a,
-                        LinkedHashMap::new
-                ));
-
-        renderGroupsList();
-
-        // reset wyboru po zmianie grupowania
-        groupsList.getSelectionModel().clearSelection();
-        booksTable.setItems(FXCollections.observableArrayList());
-        selectedGroupLabel.setText("Pick group on the left");
-    }
-
-    private void renderGroupsList() {
-        String q = groupSearchField.getText();
-        List<String> keys = new ArrayList<>(grouped.keySet());
-
-        if (q != null && !q.isBlank()) {
-            String qq = q.trim().toLowerCase();
-            keys = keys.stream()
-                    .filter(k -> k.toLowerCase().contains(qq))
-                    .toList();
+        switch (mode) {
+            case GENRE -> {
+                for (Books b : masterBooks) {
+                    if (b.getGenre() != null && b.getGenre().getName() != null) {
+                        groups.add(b.getGenre().getName().trim());
+                    }
+                }
+            }
+            case AUTHOR -> {
+                for (Books b : masterBooks) {
+                    if (b.getAuthors() == null) continue;
+                    b.getAuthors().forEach(a -> {
+                        String name = formatAuthors(List.of(a));
+                        if (!name.isBlank()) groups.add(name);
+                    });
+                }
+            }
+            case SERIES -> {
+                for (Books b : masterBooks) {
+                    if (b.getSerie() != null) groups.add("Series " + b.getSerie().getSeriesName());
+                    else groups.add("(no series)");
+                }
+            }
         }
 
-        groupsList.setItems(FXCollections.observableArrayList(keys));
-        groupsCountLabel.setText("Number of groups: " + keys.size());
+        groupsSource.setAll(groups);          // <-- KLUCZOWA ZMIANA
+        applyGroupFilter(groupSearchField.getText());
+        groupsCountLabel.setText("Groups: " + filteredGroups.size());
+
+        Platform.runLater(() -> {
+            if (prev != null && filteredGroups.contains(prev)) {
+                groupsList.getSelectionModel().select(prev);
+            } else if (!filteredGroups.isEmpty()) {
+                groupsList.getSelectionModel().selectFirst();
+            } else {
+                booksTable.getItems().clear();
+                selectedGroupLabel.setText("Pick group on the left");
+            }
+        });
     }
 
-    private String normalizeKey(String value, String fallback) {
-        if (value == null) return fallback;
-        String t = value.trim();
-        return t.isEmpty() ? fallback : t;
+    private void showBooksForGroup(String groupKey) {
+        GroupBy mode = groupByCombo.getValue();
+        if (mode == null) mode = GroupBy.GENRE;
+
+        List<Books> result;
+
+        switch (mode) {
+            case GENRE -> result = masterBooks.stream()
+                    .filter(b -> b.getGenre() != null && safe(b.getGenre().getName()).equalsIgnoreCase(groupKey))
+                    .toList();
+
+            case AUTHOR -> result = masterBooks.stream()
+                    .filter(b -> b.getAuthors() != null && b.getAuthors().stream().anyMatch(a -> {
+                        String name = formatAuthors(List.of(a));
+                        return !name.isBlank() && name.equalsIgnoreCase(groupKey);
+                    }))
+                    .toList();
+
+            case SERIES -> {
+                if ("(no series)".equals(groupKey)) {
+                    result = masterBooks.stream().filter(b -> b.getSerie() == null).toList();
+                } else {
+                    Integer id = parseSeriesId(groupKey);
+                    result = masterBooks.stream().filter(b -> Objects.equals(b.getSerie(), id)).toList();
+                }
+            }
+
+            default -> result = List.of();
+        }
+
+        booksTable.setItems(FXCollections.observableArrayList(result));
     }
 
-    private static String nullSafe(String s) { return s == null ? "" : s; }
+    private Integer parseSeriesId(String key) {
+        // "Series 12" -> 12
+        try {
+            String t = key.replace("Series", "").trim();
+            return Integer.parseInt(t);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static String safe(String s) { return s == null ? "" : s.trim(); }
 
     private void showError(String title, Throwable ex) {
         Alert a = new Alert(Alert.AlertType.ERROR);
@@ -172,4 +231,16 @@ public class CategorizationController {
         a.setContentText(ex == null ? "" : ex.getMessage());
         a.showAndWait();
     }
+
+    private void applyGroupFilter(String text) {
+        String query = text == null ? "" : text.trim().toLowerCase();
+
+        filteredGroups.setPredicate(group -> {
+            if (query.isBlank()) return true;
+            return group != null && group.toLowerCase().contains(query);
+        });
+
+        groupsCountLabel.setText("Groups: " + filteredGroups.size());
+    }
+
 }

@@ -78,8 +78,9 @@ public class Books implements Serializable {
     @JoinColumn(name = "publisher_id")
     private Publishers publisher;
 
-    @Column(name = "series_id")
-    private Integer seriesId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "series_id")
+    private Series serie;
 
     @Column(name = "publication_year")
     private Integer publicationYear;

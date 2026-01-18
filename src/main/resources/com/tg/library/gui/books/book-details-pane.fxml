@@ -13,7 +13,7 @@
         <Insets top="12" right="12" bottom="12" left="12"/>
     </padding>
 
-    <Label text="Szczegóły książki" styleClass="section-title"/>
+    <Label text="Details" styleClass="section-title"/>
 
     <GridPane hgap="10" vgap="8">
         <columnConstraints>
@@ -33,20 +33,20 @@
         <Label text="Genre:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <Label fx:id="genreValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-<!--        <Label text="ISBN:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>-->
-<!--        <Label fx:id="isbnValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>-->
+        <Label text="ISBN:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <Label fx:id="isbnValue" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-<!--        <Label text="Monastery:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>-->
-<!--        <Label fx:id="monasteryValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>-->
+        <Label text="Monastery:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <Label fx:id="monasteryValue" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-<!--        <Label text="Publisher:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>-->
-<!--        <Label fx:id="publisherValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>-->
+        <Label text="Publisher:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <Label fx:id="publisherValue" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-<!--        <Label text="Series:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>-->
-<!--        <Label fx:id="seriesValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>-->
+        <Label text="Series:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <Label fx:id="seriesValue" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
-        <Label text="Status:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="statusCombo" prefWidth="220" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        <Label text="Status:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="statusCombo" prefWidth="220" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
     </GridPane>
 
     <Pane minHeight="12"/>

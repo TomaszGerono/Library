@@ -7,10 +7,13 @@ import com.tg.library.gui.view.BooksViewModel;
 import com.tg.library.gui.view.SelectionBus;
 import com.tg.library.service.BookService;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class BookDetailsController {
@@ -25,7 +28,10 @@ public class BookDetailsController {
     @FXML private Label authorsValue;
     @FXML private Label genreValue;
     @FXML private Label yearValue;
-
+    @FXML private Label isbnValue;
+    @FXML private Label monasteryValue;
+    @FXML private Label publisherValue;
+    @FXML private Label seriesValue;
     @FXML private ComboBox<Progress> statusCombo;
     @FXML private TextArea notesArea;
     @FXML private Button saveNotesBtn;
@@ -60,10 +66,6 @@ public class BookDetailsController {
         setEmptyState();
     }
 
-    /**
-     * Jeśli nadal używasz VM w innych miejscach, możesz zostawić bind(),
-     * ale SelectionBus już wystarcza.
-     */
     public void bind(BooksViewModel vm) {
         this.vm = vm;
         vm.selectedBookProperty().addListener((obs, o, n) -> {
@@ -107,10 +109,8 @@ public class BookDetailsController {
 
             internalUpdate = true;
             try {
-                // odśwież widok i stan
                 showBook(saved);
 
-                // ważne: rozpropaguj odświeżony obiekt (żeby tabela/selection widziały nowe dane)
                 SelectionBus.INSTANCE.setSelectedBook(saved);
                 if (vm != null) vm.setSelectedBook(saved);
 
@@ -148,6 +148,15 @@ public class BookDetailsController {
             genreValue.setText(book.getGenre() == null ? "-" : safe(book.getGenre().getName()));
             yearValue.setText(book.getPublicationYear() == null ? "-" : book.getPublicationYear().toString());
 
+            isbnValue.setText(book.getIsbn());
+            monasteryValue.setText(book.getMonastery());
+            publisherValue.setText(book.getPublisher().getName());
+            seriesValue.setText(
+                    Optional.ofNullable(book.getSerie())
+                            .map(s -> s.getSeriesName())
+                            .orElse("")
+            );
+
             statusCombo.setDisable(false);
             statusCombo.setValue(book.getReadingProgress());
 
@@ -167,6 +176,10 @@ public class BookDetailsController {
             authorsValue.setText("-");
             genreValue.setText("-");
             yearValue.setText("-");
+            isbnValue.setText("-");
+            monasteryValue.setText("-");
+            publisherValue.setText("-");
+            seriesValue.setText("-");
 
             statusCombo.setDisable(true);
             statusCombo.setValue(null);
@@ -187,18 +200,14 @@ public class BookDetailsController {
     }
 
     private void setSavingState(boolean saving) {
-        // prosta blokada UI – możesz dodać label "Zapisywanie..."
         statusCombo.setDisable(saving);
         notesArea.setDisable(saving);
         saveNotesBtn.setDisable(saving || !dirty);
     }
 
     private Books getCurrentBook() {
-        // preferuj SelectionBus (bo to jest źródło prawdy w Twoim UI)
         Books b = SelectionBus.INSTANCE.getSelectedBook();
         if (b != null) return b;
-
-        // fallback jeśli jeszcze używasz VM
         return vm == null ? null : vm.getSelectedBook();
     }
 

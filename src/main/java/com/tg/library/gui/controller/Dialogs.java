@@ -1,15 +1,20 @@
 package com.tg.library.gui.controller;
 
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Window;
 
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class Dialogs {
-    private Dialogs() {}
 
-    // Owner window: najprościej (pierwsze okno aktywne)
+    private static final ConcurrentHashMap<String, Object> controllerRegistry = new ConcurrentHashMap<>();
+
+    private Dialogs() {
+    }
+
     public static Window ownerWindow() {
         for (Window w : Window.getWindows()) if (w.isShowing()) return w;
         return null;
@@ -60,11 +65,10 @@ public final class Dialogs {
         return d.showAndWait();
     }
 
-    // Minimalny registry kontrolerów dla fx:include (jeżeli go używasz)
-    private static final ConcurrentHashMap<String, Object> controllerRegistry = new ConcurrentHashMap<>();
     public static void registerController(String fxml, Object controller) {
         controllerRegistry.put(fxml, controller);
     }
+
     public static Object lookupController(String fxml) {
         return controllerRegistry.get(fxml);
     }

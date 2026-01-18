@@ -13,7 +13,7 @@
         <ToolBar>
             <Label text="Categorisation"/>
             <Pane HBox.hgrow="ALWAYS"/>
-            <Button text="⟳ Odśwież" onAction="#onRefresh"/>
+            <Button text="⟳ Refresh" onAction="#onRefresh"/>
         </ToolBar>
     </top>
 

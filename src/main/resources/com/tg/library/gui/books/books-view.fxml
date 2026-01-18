@@ -34,11 +34,11 @@
                     <TableColumn fx:id="titleCol" text="Title"/>
                     <TableColumn fx:id="authorCol" text="Author(s)" prefWidth="220" minWidth="220" maxWidth="220"/>
                     <TableColumn fx:id="genreCol" text="Genre"/>
-                    <TableColumn fx:id="yearCol" text="Year"/>
                     <TableColumn fx:id="isbnCol" text="ISBN"/>
                     <TableColumn fx:id="statusCol" text="Status"/>
-                    <TableColumn fx:id="pagesCol" text="No. of pages"/>
                     <TableColumn fx:id="monasteryCol" text="Monastery"/>
+                    <TableColumn fx:id="yearCol" text="Year"/>
+                    <TableColumn fx:id="seriesCol" text="Series"/>
                 </columns>
             </TableView>
 

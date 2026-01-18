@@ -1,7 +1,10 @@
 package com.tg.library.gui.controller;
 
+import com.tg.library.gui.view.SelectionBus;
 import com.tg.library.service.GoogleBooksImportService;
 import com.tg.library.service.JsonImportService;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -13,15 +16,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 
+@Log4j2
 @Component
 public class ImportController {
 
-    enum Source { JSON_FILE, GOOGLE_BOOKS }
+    public enum Source { JSON_FILE, GOOGLE_BOOKS }
+
+    private final GoogleBooksImportService googleBooksImportService;
+    private final JsonImportService jsonImportService;
 
     @FXML private ChoiceBox<Source> sourceChoiceBox;
 
@@ -40,11 +50,9 @@ public class ImportController {
     @FXML private Button confirmButton;
     @FXML private Label statusLabel;
 
-    private final GoogleBooksImportService googleBooksImportService;
-    private final JsonImportService jsonImportService;
-
     @Autowired
-    public ImportController(JsonImportService jsonImportService, GoogleBooksImportService googleBooksImportService) {
+    public ImportController(JsonImportService jsonImportService,
+                            GoogleBooksImportService googleBooksImportService) {
         this.jsonImportService = jsonImportService;
         this.googleBooksImportService = googleBooksImportService;
     }
@@ -71,11 +79,17 @@ public class ImportController {
             googleQueryField.clear();
         });
 
-        // walidacja dla google query
+        // walidacja
         googleQueryField.textProperty().addListener((obs, o, n) -> updateConfirmEnabled());
+
+        // stan początkowy
+        setPaneVisible(jsonPane, true);
+        setPaneVisible(googlePane, false);
+        updateConfirmEnabled();
     }
 
     private void setPaneVisible(Region pane, boolean visible) {
+        if (pane == null) return;
         pane.setVisible(visible);
         pane.setManaged(visible);
     }
@@ -86,13 +100,15 @@ public class ImportController {
             case JSON_FILE -> selectedFile != null;
             case GOOGLE_BOOKS -> googleQueryField.getText() != null && !googleQueryField.getText().trim().isEmpty();
         };
-        confirmButton.setDisable(!enabled);
+        if (confirmButton != null) confirmButton.setDisable(!enabled);
     }
 
     @FXML
     private void onSelectFile() {
         FileChooser fc = new FileChooser();
+        fc.setTitle("Select JSON file");
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files", "*.json"));
+
         File f = fc.showOpenDialog(pathDisplayField.getScene().getWindow());
         if (f != null) {
             selectedFile = f;
@@ -106,26 +122,82 @@ public class ImportController {
     private void onConfirmImport() {
         statusLabel.setText("");
 
-        try {
-            Source src = sourceChoiceBox.getValue();
-            if (src == Source.JSON_FILE) {
-                // jsonImportService.importFromJson(selectedFile.toPath());
-                // TODO: wywołaj swój import
-            } else {
-                String q = googleQueryField.getText().trim();
-                int max = maxResultsSpinner.getValue();
-                boolean onlyBooks = onlyBooksCheckBox.isSelected();
+        Source src = sourceChoiceBox.getValue();
 
-                // googleBooksImportService.importByQuery(q, max, onlyBooks);
-                // TODO: wywołaj swój import z API
+        if (src == Source.JSON_FILE) {
+            if (selectedFile == null) {
+                statusLabel.setText("Please select a JSON file.");
+                return;
             }
 
-            // zamknij okno po sukcesie
-            confirmButton.getScene().getWindow().hide();
+            confirmButton.setDisable(true);
+            statusLabel.setText("Importing...");
 
-        } catch (Exception e) {
-            statusLabel.setText("Import failed: " + e.getMessage());
+            runAsync("Import JSON",
+                    () -> jsonImportService.importFromJson(selectedFile.toPath()),
+                    count -> {
+                        statusLabel.setText("");
+                        Dialogs.info("Import finished", "Imported books: " + count);
+                        SelectionBus.INSTANCE.fireBooksChanged();
+                        confirmButton.getScene().getWindow().hide();
+                    }
+            );
+            return;
         }
+
+        // GOOGLE_BOOKS
+        String q = googleQueryField.getText() == null ? "" : googleQueryField.getText().trim();
+        if (q.isEmpty()) {
+            statusLabel.setText("Query is required.");
+            return;
+        }
+
+        int max = maxResultsSpinner.getValue();
+        boolean onlyBooks = onlyBooksCheckBox.isSelected();
+
+        confirmButton.setDisable(true);
+        statusLabel.setText("Importing from Google Books...");
+
+        runAsync("Import Google Books",
+                () -> {
+                    // Jeśli Twoja metoda zwraca liczbę zaimportowanych rekordów, zwróć ją tutaj
+                    // np. return googleBooksImportService.importByQuery(q, max, onlyBooks);
+                    // Na razie 0, dopóki nie podłączysz implementacji:
+                    // googleBooksImportService.importByQuery(q, max, onlyBooks);
+                    return 0;
+                },
+                count -> {
+                    statusLabel.setText("");
+                    Dialogs.info("Import finished", "Imported books: " + count);
+                    SelectionBus.INSTANCE.fireBooksChanged();
+                    confirmButton.getScene().getWindow().hide();
+                }
+        );
+    }
+
+    private <T> void runAsync(String opName, Callable<T> work, Consumer<T> onSuccess) {
+        Task<T> task = new Task<>() {
+            @Override
+            protected T call() throws Exception {
+                return work.call();
+            }
+        };
+
+        task.setOnSucceeded(e -> Platform.runLater(() -> {
+            onSuccess.accept(task.getValue());
+            updateConfirmEnabled(); // w razie gdy okno nie zostało zamknięte
+        }));
+
+        task.setOnFailed(e -> Platform.runLater(() -> {
+            Throwable ex = task.getException();
+            log.error("{} failed", opName, ex);
+            statusLabel.setText("Import failed: " + (ex == null ? "" : ex.getMessage()));
+            updateConfirmEnabled();
+        }));
+
+        Thread t = new Thread(task, "fx-" + opName.replace(' ', '-').toLowerCase());
+        t.setDaemon(true);
+        t.start();
     }
 
     @FXML

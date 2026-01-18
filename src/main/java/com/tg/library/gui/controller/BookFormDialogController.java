@@ -36,12 +36,6 @@ public class BookFormDialogController {
     @FXML private ListView<Authors> authorsList;
     @FXML private ListView<Authors> selectedAuthorsList;
     @FXML private TextField authorSearchField;
-
-    private javafx.collections.ObservableList<Authors> allAuthors =
-            javafx.collections.FXCollections.observableArrayList();
-    private javafx.collections.ObservableList<Authors> selectedAuthors =
-            javafx.collections.FXCollections.observableArrayList();
-
     @FXML private ComboBox<Genres> genreCombo;
     @FXML private TextField yearField;
     @FXML private TextField isbnField;
@@ -50,6 +44,11 @@ public class BookFormDialogController {
     @FXML private Label errorLabel;
 
     @FXML private ButtonType saveButtonType;
+
+    private javafx.collections.ObservableList<Authors> allAuthors =
+            javafx.collections.FXCollections.observableArrayList();
+    private javafx.collections.ObservableList<Authors> selectedAuthors =
+            javafx.collections.FXCollections.observableArrayList();
 
     private final BookFormViewModel bookFormViewModel = new BookFormViewModel();
     private Books editing;
@@ -108,7 +107,6 @@ public class BookFormDialogController {
 
     public void setGenres(java.util.List<Genres> genres) {
         genreCombo.setItems(javafx.collections.FXCollections.observableArrayList(genres));
-        // opcjonalnie: pozwól na brak gatunku
         genreCombo.getItems().add(0, null);
 
         genreCombo.setConverter(new javafx.util.StringConverter<>() {
@@ -144,10 +142,6 @@ public class BookFormDialogController {
             errorLabel.setVisible(true);
             return null;
         }
-//        if (selectedAuthors.isEmpty()) {
-//            showError("Authors is required.");
-//            return null;
-//        }
         Books target = (editing != null) ? editing : new Books();
         target.setGenre(genreCombo.getValue()); // może być null – to OK
         target.setAuthors(new java.util.ArrayList<>(selectedAuthors));
@@ -189,8 +183,6 @@ public class BookFormDialogController {
             ButtonType saveType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
             pane.getButtonTypes().setAll(ButtonType.CANCEL, saveType);
 
-
-
             // Walidacja przed zamknięciem
             Button saveBtn = (Button) pane.lookupButton(saveType);
             saveBtn.addEventFilter(ActionEvent.ACTION, ev -> {
@@ -200,7 +192,6 @@ public class BookFormDialogController {
                 }
             });
 
-            // Konwersja: przy OK zwróć Result, inaczej null
             dialog.setResultConverter(clicked -> {
                 if (clicked == saveType) {
                     return controller.buildResult();
@@ -211,21 +202,10 @@ public class BookFormDialogController {
             return dialog.showAndWait().orElse(null);
 
         } catch (Exception e) {
-            // obsłuż komunikat
             log.error("Error", e);
             throw new RuntimeException(e);
         }
     }
-
-//    @FXML
-//    public void onAddAuthorToSelection() {
-//        var picked = authorsList.getSelectionModel().getSelectedItems();
-//        if (picked == null || picked.isEmpty()) return;
-//
-//        for (Authors a : picked) {
-//            if (!selectedAuthors.contains(a)) selectedAuthors.add(a);
-//        }
-//    }
 
     @FXML
     public void onAddAuthorToSelection() {
@@ -235,7 +215,6 @@ public class BookFormDialogController {
         for (Authors a : picked) {
             if (!selectedAuthors.contains(a)) selectedAuthors.add(a);
         }
-
         authorsList.getSelectionModel().clearSelection();
     }
 

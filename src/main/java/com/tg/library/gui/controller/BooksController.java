@@ -9,7 +9,8 @@ import com.tg.library.gui.view.SelectionBus;
 import com.tg.library.service.AuthorService;
 import com.tg.library.service.BookService;
 import com.tg.library.service.GenresService;
-import javafx.collections.FXCollections;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.concurrent.Task;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
@@ -67,12 +68,11 @@ public class BooksController {
     @FXML
     private TableColumn<Books, String> isbnCol;
     @FXML
-    private TableColumn<Books, Integer> pagesCol;
-    @FXML
     private TableColumn<Books, Progress> statusCol;
     @FXML
     private TableColumn<Books, String> monasteryCol;
-
+    @FXML
+    private TableColumn<Books, String> seriesCol;
 
     @FXML
     private Button editBtn;
@@ -124,7 +124,6 @@ public class BooksController {
         authorCol.setCellValueFactory(cd ->
                 new javafx.beans.property.SimpleStringProperty(AuthorsFormatter.formatAuthors(cd.getValue().getAuthors()))
         );
-        //genreCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(nullSafe(data.getValue().getGenre().getName())));
         genreCol.setCellValueFactory(data -> {
             Genres g = data.getValue().getGenre();
             String name = (g == null) ? "" : nullSafe(g.getName());
@@ -133,16 +132,20 @@ public class BooksController {
 
         yearCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getPublicationYear()));
         isbnCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(nullSafe(data.getValue().getIsbn())));
-        // TODO: obsluzyc nulla w linii 105
-        pagesCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(Optional.ofNullable(data.getValue().getPagesCount()).orElse(0)));
         statusCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getReadingProgress()));
         monasteryCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(nullSafe(data.getValue().getMonastery())));
-
+        seriesCol.setCellValueFactory(data ->
+                new SimpleStringProperty(
+                        Optional.ofNullable(data.getValue().getSerie())
+                                .map(s -> s.getSeriesName())
+                                .orElse("")
+                )
+        );
         enableTooltipForColumn(titleCol);
         enableTooltipForColumn(authorCol);
         enableTooltipForColumn(isbnCol);
-//        enableTooltipForColumn(seriesCol);
-        // TODO dodac tooltipy dla pozostalych kolumn
+        enableTooltipForColumn(monasteryCol);
+        enableTooltipForColumn(seriesCol);
 
         booksTable.setItems(vm.booksView());
         vm.booksView().comparatorProperty().bind(booksTable.comparatorProperty());
@@ -164,19 +167,10 @@ public class BooksController {
 //        statusFilter.setItems(FXCollections.observableArrayList(ReadingStatus.values()));
 //        statusFilter.valueProperty().bindBidirectional(vm.statusFilterProperty());
 
-        // genres zasilimy po load
+        // genres zasilamy po load
         genreFilter.valueProperty().bindBidirectional(vm.genreFilterProperty());
 
-        // TODO uncomment
         resultCountLabel.textProperty().bind(vm.filteredCountProperty().asString("Results: %d"));
-
-//        booksTable.setRowFactory(tv -> {
-//            TableRow<Books> row = new TableRow<>();
-//            row.setOnMouseClicked(e -> {
-//                if (e.getClickCount() == 2 && !row.isEmpty()) onEdit();
-//            });
-//            return row;
-//        });
 
         booksTable.setRowFactory(tv -> {
             TableRow<Books> row = new TableRow<>() {
@@ -224,7 +218,6 @@ public class BooksController {
             }
         });
 
-// to samo dla listy rozwijanej (żeby też była ładna)
         genreFilter.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(Genres g, boolean empty) {
@@ -243,6 +236,9 @@ public class BooksController {
             booksTable.refresh();
         });
 
+        SelectionBus.INSTANCE.booksChangedProperty().addListener((obs, oldV, newV) -> {
+            loadAsync();
+        });
         LOG.info("BooksController initialized");
     }
 
@@ -336,6 +332,11 @@ public class BooksController {
             log.info("TTT Loaded={} nonNull={}", books == null ? 0 : books.size(), safe.size());
 
             vm.setAll(safe);
+            Platform.runLater(() -> {
+                if (!booksTable.getItems().isEmpty()) {
+                    booksTable.getSelectionModel().selectFirst();
+                }
+            });
             refreshGenreChoices();
         });
 
@@ -356,7 +357,6 @@ public class BooksController {
 
         genreFilter.setItems(items);
     }
-
 
 
     private <T> void runAsync(String opName, java.util.concurrent.Callable<T> work, java.util.function.Consumer<T> onSuccess) {

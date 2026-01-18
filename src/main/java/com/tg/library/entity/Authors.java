@@ -51,7 +51,4 @@ public class Authors implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "monastery")
-    private String monastery;
-
 }
