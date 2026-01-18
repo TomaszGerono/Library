@@ -1,20 +1,19 @@
-# 📚 Library Manager
+# Library Manager
 
 A desktop application for managing a personal book library, built with **JavaFX**, **Spring Boot**, and **JPA (Hibernate)**.  
-The project was developed as an **academic assignment**, with a strong focus on clean architecture, GUI–backend integration, and relational data modeling.
-
+The project was developed as an academic assignment, with a strong focus on GUI–backend integration, and relational data modeling.
 ---
 
-## ✨ Features
+## Features
 
-### 📖 Book Management
+### Book Management
 - add, edit, and delete books
 - support for multiple authors (many-to-many relationship)
 - book details: genre, publication year, ISBN, number of pages
 - reading progress tracking: `unread / reading / completed`
 - personal notes for each book
 
-### 🔍 Search & Filtering
+### Search & Filtering
 - filtering by:
     - title
     - author (full name)
@@ -23,13 +22,13 @@ The project was developed as an **academic assignment**, with a strong focus on 
 - table sorting
 - live results counter
 
-### 🗂️ Topics (Custom Shelves)
+### Topics (Custom Shelves)
 - create and delete topics
 - assign books to topics
 - remove books from topics
 - view all books assigned to a selected topic
 
-### 🧩 Categorization
+### Categorisation
 - group books by:
     - genre
     - author
@@ -37,7 +36,7 @@ The project was developed as an **academic assignment**, with a strong focus on 
 - dynamic group lists
 - preview books within the selected category
 
-### 📊 Overview (Dashboard)
+### Overview (Dashboard)
 - library summary:
     - total number of books
     - number of topics
@@ -45,14 +44,14 @@ The project was developed as an **academic assignment**, with a strong focus on 
 - book recommendations list
 - visual KPI cards and quote section
 
-### 📥 Data Import
+### Data Import
 - import books from **JSON files**
 - import from Google Books API (prepared structure)
 - automatic handling of authors, genres, and topics during import
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 - **JavaFX** – user interface
 - **Spring Boot** – backend and dependency injection
@@ -65,7 +64,7 @@ The project was developed as an **academic assignment**, with a strong focus on 
 
 ---
 
-## 🧠 Key Technical Concepts
+## Key Technical Concepts
 
 - `@ManyToMany` relationships (Books ↔ Authors, Books ↔ Topics)
 - global `SelectionBus` for cross-view communication
@@ -77,16 +76,16 @@ The project was developed as an **academic assignment**, with a strong focus on 
 
 ---
 
-## 🗄️ Database
+## Database
 
 - **SQLite**
 - automatic schema creation (`ddl-auto=create` in dev profile) for presentation purposes
-- sample data initialization (Polish literature & IT books)
+- sample data initialization
 - sequences with custom initial values
 
 ---
 
-## ▶️ Running the Application
+## Running the Application
 
 ### Requirements
 - Java **21+**
