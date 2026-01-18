@@ -1,7 +1,9 @@
-# Library Manager
+### Library Manager
+
 
 A desktop application for managing a personal book library, built with **JavaFX**, **Spring Boot**, and **JPA (Hibernate)**.  
 The project was developed as an academic assignment, with a strong focus on GUI–backend integration, and relational data modeling.
+
 ---
 
 ## Features
