@@ -116,6 +116,7 @@ public class BookDetailsController {
 
                 dirty = false;
                 saveNotesBtn.setDisable(true);
+                SelectionBus.INSTANCE.fireBooksChanged();
             } finally {
                 internalUpdate = false;
                 setSavingState(false);

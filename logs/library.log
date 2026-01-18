@@ -153,3 +153,5 @@
 2026-01-17 23:58:44 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=13 nonNull=13
 2026-01-18 00:24:43 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
 2026-01-18 00:24:43 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=13 nonNull=13
+2026-01-18 09:56:22 INFO  com.tg.library.gui.controller.BooksController - BooksController initialized
+2026-01-18 09:56:23 INFO  com.tg.library.gui.controller.BooksController - TTT Loaded=13 nonNull=13

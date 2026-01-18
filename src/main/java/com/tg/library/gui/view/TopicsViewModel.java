@@ -57,19 +57,19 @@ public class TopicsViewModel {
     }
 
     public void renameTopic(Long id, String newName) {
-        topicService.rename(id, newName);
+//        topicService.rename(id, newName);
         load();
     }
 
     public void deleteTopic(Long id) {
-        topicService.deleteById(id);
-        selectedTopic.set(null);
+//        topicService.deleteById(id);
+//        selectedTopic.set(null);
         load();
     }
 
     public void addBookToTopic(Long topicId, Long bookId) {
-        topicService.addBookToTopic(topicId, bookId);
-        loadBooksForSelectedTopic();
+//        topicService.addBookToTopic(topicId, bookId);
+//        loadBooksForSelectedTopic();
     }
 
     public void removeBookFromTopic(Long topicId, Long bookId) {

@@ -31,7 +31,7 @@ public class Series implements Serializable {
     private Long bookId;
 
     @Column(name = "series_name")
-    private Long seriesName;
+    private String seriesName;
 
     @Column(name = "author_id")
     private Long authorId;

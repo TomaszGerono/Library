@@ -1,6 +1,7 @@
 package com.tg.library.gui.view;
 
 import com.tg.library.entity.Books;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -31,5 +32,7 @@ public enum SelectionBus {
     public void setSelectedBook(Books book) {
         selectedBook.set(book);
     }
+
+
 }
 

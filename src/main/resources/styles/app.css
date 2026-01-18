@@ -157,3 +157,74 @@
 .table-row-cell:completed:hover {
     -fx-background-color: derive(-fx-background-color, -5%);
 }
+
+/* ===== OVERVIEW ONLY ===== */
+
+.overview-root .app-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-padding: 0 0 6 0;
+}
+
+.overview-root .section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-padding: 8 0 4 0;
+}
+
+.overview-root .kpi-card {
+    -fx-padding: 12 16;
+    -fx-spacing: 4;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #f3f6fb);
+    -fx-border-color: rgba(0, 0, 0, 0.08);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);
+}
+
+.overview-root .kpi-card > Label:first-child {
+    -fx-font-size: 12px;
+    -fx-text-fill: #5f6368;
+}
+
+.overview-root .kpi-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1f2937;
+}
+
+/* tylko listy w Overview */
+.overview-root .list-view {
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: rgba(0,0,0,0.08);
+}
+
+.overview-root .list-cell {
+    -fx-padding: 10 12;
+}
+
+.overview-root .list-cell:filled:selected {
+    -fx-background-color: #e0e7ff;
+}
+
+.overview-root .list-cell:filled:hover {
+    -fx-background-color: #f1f5ff;
+}
+
+.overview-root .overview-quote {
+    -fx-padding: 16 0 4 0;
+}
+
+.overview-root .quote-author {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+.overview-root .quote-text {
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+    -fx-font-style: italic;
+    -fx-text-fill: #374151;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 4, 0, 0, 1);
+}

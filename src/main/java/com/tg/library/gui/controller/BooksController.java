@@ -80,6 +80,7 @@ public class BooksController {
     private Button removeBtn;
     @FXML
     private Label resultCountLabel;
+
     @Autowired
     public BooksController(BookService bookService, GenresService genresService, AuthorService authorsService) {
         this.bookService = bookService;
@@ -324,15 +325,6 @@ public class BooksController {
                 this::loadAsync);
     }
 
-    @FXML
-    public void onRefresh() {
-//        booksTable.getItems().clear();
-//        var allBooks = bookService.findAll();
-//        booksTable.setItems(FXCollections.observableArrayList(allBooks));
-//        resultCountLabel.setText("Results: " + allBooks.size());
-        loadAsync();
-    }
-
     private void loadAsync() {
 
         runAsync("Loading books", () -> bookService.findAll(), books -> {
@@ -379,6 +371,7 @@ public class BooksController {
             if (!booksTable.getItems().isEmpty()) {
                 booksTable.getSelectionModel().selectFirst();
             }
+            SelectionBus.INSTANCE.fireBooksChanged();
         });
         task.setOnFailed(e -> Dialogs.error(opName + " nieudane", task.getException().getMessage()));
 

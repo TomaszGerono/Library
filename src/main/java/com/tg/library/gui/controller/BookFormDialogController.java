@@ -33,7 +33,6 @@ public class BookFormDialogController {
     public record Result(Books book) {}
 
     @FXML private TextField titleField;
-//    @FXML private TextField authorField;
     @FXML private ListView<Authors> authorsList;
     @FXML private ListView<Authors> selectedAuthorsList;
     @FXML private TextField authorSearchField;

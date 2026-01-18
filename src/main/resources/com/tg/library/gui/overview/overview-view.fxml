@@ -4,11 +4,12 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<!--<VBox fx:controller="com.tg.library.gui.controller.OverviewController"-->
-<!--      xmlns:fx="http://javafx.com/fxml" spacing="12" padding="14">-->
 
 <VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml">
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tg.library.gui.controller.OverviewController"
+      styleClass="overview-root">
+
     <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
@@ -20,7 +21,7 @@
             <Label fx:id="totalBooksLabel" styleClass="kpi-value"/>
         </VBox>
         <VBox styleClass="kpi-card">
-            <Label text="Topics"/>
+            <Label text="Categories"/>
             <Label fx:id="totalShelvesLabel" styleClass="kpi-value"/>
         </VBox>
         <VBox styleClass="kpi-card">
@@ -41,4 +42,14 @@
 
     <Label text="Recommendations" styleClass="section-title"/>
     <ListView fx:id="recommendationsList" prefHeight="240"/>
+
+    <Separator/>
+
+    <VBox alignment="CENTER" spacing="6" styleClass="overview-quote">
+        <Label text="“So many books, so little time.”"
+               styleClass="quote-text"/>
+        <Label text="— Frank Zappa"
+               styleClass="quote-author"/>
+    </VBox>
+
 </VBox>

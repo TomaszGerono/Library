@@ -4,6 +4,8 @@ import com.tg.library.entity.Books;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import static com.tg.library.gui.util.AuthorsFormatter.formatAuthors;
+
 public class BookFormViewModel {
 
     public final StringProperty title = new SimpleStringProperty("");
@@ -18,13 +20,12 @@ public class BookFormViewModel {
     public void fromBook(Books b) {
         if (b == null) return;
         title.set(nullToEmpty(b.getTitle()));
-        // TODO uncomment
-//        author.set(nullToEmpty(b.getAuthor()));
-//        genre.set(nullToEmpty(b.getGenre()));
-//        year.set(b.getPublicationYear() == null ? "" : b.getPublicationYear().toString());
-//        isbn.set(nullToEmpty(b.getIsbn()));
-//        pages.set(b.getPages() == null ? "" : b.getPages().toString());
-//        series.set(nullToEmpty(b.getSeries()));
+//        author.set(nullToEmpty(formatAuthors(b.getAuthors())));
+        genre.set(nullToEmpty(b.getGenre().toString()));
+        year.set(b.getPublicationYear() == null ? "" : b.getPublicationYear().toString());
+        isbn.set(nullToEmpty(b.getIsbn()));
+        pages.set(b.getPagesCount() == null ? "" : b.getPagesCount().toString());
+        //series.set(nullToEmpty(b.getSeries()));
     }
 
     public void applyTo(Books b) {

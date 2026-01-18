@@ -6,7 +6,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import com.tg.library.entity.Progress; // or wherever your enum is located
+import com.tg.library.entity.Progress;
 
 public class OverviewViewModel {
     private final BookService bookService;
