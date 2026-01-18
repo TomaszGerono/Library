@@ -6,7 +6,8 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.tg.library.gui.controller.BookDetailsController">
+      fx:controller="com.tg.library.gui.controller.BookDetailsController"
+      minWidth="320" prefWidth="360">
 
     <padding>
         <Insets top="12" right="12" bottom="12" left="12"/>
@@ -32,13 +33,28 @@
         <Label text="Genre:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <Label fx:id="genreValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
+<!--        <Label text="ISBN:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>-->
+<!--        <Label fx:id="isbnValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>-->
+
+<!--        <Label text="Monastery:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>-->
+<!--        <Label fx:id="monasteryValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>-->
+
+<!--        <Label text="Publisher:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>-->
+<!--        <Label fx:id="publisherValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>-->
+
+<!--        <Label text="Series:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>-->
+<!--        <Label fx:id="seriesValue" GridPane.rowIndex="3" GridPane.columnIndex="1"/>-->
+
         <Label text="Status:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
         <ComboBox fx:id="statusCombo" prefWidth="220" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
     </GridPane>
 
+    <Pane minHeight="12"/>
+    <Separator/>
+    <Pane minHeight="12"/>
     <Label text="Notes:"/>
     <TextArea fx:id="notesArea" prefRowCount="8" wrapText="true"/>
-
+    <Pane minHeight="12"/>
     <HBox spacing="10">
         <Button fx:id="saveNotesBtn" text="Save" onAction="#onSaveNotes"/>
         <Label fx:id="saveInfoLabel"/>

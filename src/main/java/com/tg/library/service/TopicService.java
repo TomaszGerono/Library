@@ -36,66 +36,8 @@ public class TopicService {
         return topics;
     }
 
-//    public void rename(Long id, String newName) {
-//        Topics topic = topicsRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Topic not found with id: " + id));
-//        topic.setName(newName);
-//        topicsRepository.save(topic);
-//    }
-
-//    public void deleteById(Long id) {
-//        // first remove this topic from all books that reference it
-//        List<Books> booksWithTopic = topicsRepository.findAll().stream()
-//                .filter(book -> book.getTopics() != null &&
-//                        book.getTopics().stream().anyMatch(t -> t.getTopicId().equals(id)))
-//                .toList();
-//
-//        for (Books book : booksWithTopic) {
-//            book.getTopics().removeIf(t -> t.getTopicId().equals(id));
-//            booksRepository.save(book);
-//        }
-//
-//        // then delete the topic itself
-//        topicsRepository.deleteById(id);
-//    }
-
-    public void addBookToTopic(Books books, Topics topics) {
-            books.getTopics().add(topics);
-//            BooksRepository.saveAndFlush(topics);
-//
-//        Topics topic = topicsRepository.findById(topicId)
-//                .orElseThrow(() -> new RuntimeException("Topic not found with id: " + topicId));
-//        Books book = booksRepository.findById(bookId)
-//                .orElseThrow(() -> new RuntimeException("Book not found with id: " + bookId));
-//
-//        // check if book already has this topic
-//        if (book.getTopics() == null || !book.getTopics().contains(topic)) {
-//            book.getTopics().add(topic);
-//            booksRepository.save(book);
-//        }
+    public List<Books> findBooksByTopicId(Long topicId) {
+        return topicsRepository.findBooksByTopicId(topicId);
     }
 
-    public void removeBookFromTopic(Long topicId, Long bookId) {
-//        Books book = booksRepository.findById(bookId)
-//                .orElseThrow(() -> new RuntimeException("Book not found with id: " + bookId));
-//        Topics topic = topicsRepository.findById(topicId)
-//                .orElseThrow(() -> new RuntimeException("Topic not found with id: " + topicId));
-//
-//        if (book.getTopics() != null) {
-//            book.getTopics().remove(topic);
-//            booksRepository.save(book);
-//        }
-    }
-
-    public List<Books> findBooksInTopic(Long topicId) {
-//        Topics topic = topicsRepository.findById(topicId)
-//                .orElseThrow(() -> new RuntimeException("Topic not found with id: " + topicId));
-//
-//        // get all books that have this topic in their topics list
-//        return booksRepository.findAll().stream()
-//                .filter(book -> book.getTopics() != null && book.getTopics().contains(topic))
-//                .toList();
-//    }
-        return null;
-    }
 }

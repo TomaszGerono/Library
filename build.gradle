@@ -43,11 +43,10 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:3.50.3.0")
     compileOnly("org.projectlombok:lombok:1.18.42")
     implementation("org.hibernate.orm:hibernate-community-dialects:7.2.0.Final")
-    implementation('org.springframework.boot:spring-boot-starter:4.0.0')
     implementation 'org.springframework.boot:spring-boot-starter-log4j2:4.0.0'
     // Jackson -> ObjectMapper
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
-//    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14:0'
+    // implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14:0'
     // WebClient (HTTP import, e.g. Google Books)
     implementation 'org.springframework.boot:spring-boot-starter-webflux:4.0.0'
 

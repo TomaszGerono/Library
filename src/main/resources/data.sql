@@ -119,3 +119,17 @@ insert into book_authors(author_id, book_id) values(15, 13);
 insert into book_authors(author_id, book_id)values (13, 9);
 insert into book_authors(author_id, book_id) values (14, 10);
 
+insert into topics (id, name)
+values (1, 'IT');
+
+insert into topics (id, name)
+values (2, 'Love');
+
+insert into topics (id, name)
+values (3, 'Science');
+
+insert into topics (id, name)
+values (4, 'Relax');
+
+insert into topics (id, name)
+values (5, 'Religion');

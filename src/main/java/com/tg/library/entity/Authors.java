@@ -37,7 +37,6 @@ public class Authors implements Serializable {
             initialValue = 1000,
             allocationSize = 1
     )
-
     private Long id;
 
     @Column(name = "first_name")

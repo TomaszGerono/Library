@@ -34,7 +34,7 @@ public class OverviewController {
     }
 
     @FXML private Label totalBooksLabel;
-    @FXML private Label totalShelvesLabel;
+    @FXML private Label totalCategoriesLabel;
     @FXML private Label unreadLabel;
     @FXML private Label readingLabel;
     @FXML private Label completedLabel;
@@ -99,7 +99,7 @@ public class OverviewController {
         if (d == null) { setDash(); return; }
 
         totalBooksLabel.setText(String.valueOf(d.totalBooks));
-        totalShelvesLabel.setText(String.valueOf(d.totalCategories));
+        totalCategoriesLabel.setText(String.valueOf(d.totalCategories));
         unreadLabel.setText(String.valueOf(d.unread));
         readingLabel.setText(String.valueOf(d.reading));
         completedLabel.setText(String.valueOf(d.completed));
@@ -112,7 +112,7 @@ public class OverviewController {
 
     private void setDash() {
         totalBooksLabel.setText("-");
-        totalShelvesLabel.setText("-");
+        totalCategoriesLabel.setText("-");
         unreadLabel.setText("-");
         readingLabel.setText("-");
         completedLabel.setText("-");

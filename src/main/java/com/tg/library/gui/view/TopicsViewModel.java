@@ -73,7 +73,8 @@ public class TopicsViewModel {
     }
 
     public void removeBookFromTopic(Long topicId, Long bookId) {
-        topicService.removeBookFromTopic(topicId, bookId);
+        // TODO uncomment
+//        topicService.removeBookFromTopic(topicId, bookId);
         loadBooksForSelectedTopic();
     }
 
@@ -87,8 +88,9 @@ public class TopicsViewModel {
             topicBooks.clear();
             return;
         }
-
-        var books = topicService.findBooksInTopic(t.getTopicId());
-        topicBooks.setAll(books);
+// TODO uncomment
+//        var books = topicService.findBooksInTopic(t.getTopicId());
+// TODO uncomment
+//        topicBooks.setAll(books);
     }
 }

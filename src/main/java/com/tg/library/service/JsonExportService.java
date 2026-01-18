@@ -11,7 +11,7 @@ import java.nio.file.Path;
 public class JsonExportService {
 
     private final ObjectMapper objectMapper;
-    BookService bookService;
+    private final BookService bookService;
 
     @Autowired
     public JsonExportService(ObjectMapper objectMapper, BookService bookService) {

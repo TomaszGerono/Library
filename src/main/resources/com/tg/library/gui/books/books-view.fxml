@@ -28,7 +28,7 @@
     </top>
 
     <center>
-        <SplitPane>
+        <SplitPane dividerPositions="0.72">
             <TableView fx:id="booksTable">
                 <columns>
                     <TableColumn fx:id="titleCol" text="Title"/>
