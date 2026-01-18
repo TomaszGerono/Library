@@ -3,7 +3,7 @@ package com.tg.library.gui.controller;
 import com.tg.library.AppContext;
 import com.tg.library.entity.Books;
 import com.tg.library.entity.Progress;
-import com.tg.library.gui.view.ShelvesViewModel;
+import com.tg.library.gui.view.TopicsViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -11,11 +11,11 @@ import javafx.scene.control.TableView;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ShelvesController {
+public class TopicsController {
     private AppContext ctx;
-    private ShelvesViewModel shelvesViewModel;
+    private TopicsViewModel topicsViewModel;
 
-//    @FXML private ListView<Section> shelvesList;
+//    @FXML private ListView<Section> topicsList;
     @FXML private Button renameBtn;
     @FXML private Button deleteBtn;
 

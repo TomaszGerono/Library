@@ -133,7 +133,7 @@ public class BooksController {
         yearCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getPublicationYear()));
         isbnCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(nullSafe(data.getValue().getIsbn())));
         // TODO: obsluzyc nulla w linii 105
-        pagesCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(Optional.of(data.getValue().getPagesCount()).orElse(0)));
+        pagesCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(Optional.ofNullable(data.getValue().getPagesCount()).orElse(0)));
         statusCol.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getReadingProgress()));
         monasteryCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(nullSafe(data.getValue().getMonastery())));
 
@@ -374,7 +374,12 @@ public class BooksController {
                 return work.call();
             }
         };
-        task.setOnSucceeded(e -> onSuccess.accept(task.getValue()));
+        task.setOnSucceeded(e -> {
+            onSuccess.accept(task.getValue());
+            if (!booksTable.getItems().isEmpty()) {
+                booksTable.getSelectionModel().selectFirst();
+            }
+        });
         task.setOnFailed(e -> Dialogs.error(opName + " nieudane", task.getException().getMessage()));
 
         //System.out.println(task.getException().getStackTrace());

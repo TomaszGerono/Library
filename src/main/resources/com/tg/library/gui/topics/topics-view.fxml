@@ -11,7 +11,7 @@
 <?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.tg.library.gui.controller.ShelvesController">
+            fx:controller="com.tg.library.gui.controller.TopicsController">
     <center>
         <SplitPane dividerPositions="0.35">
             <VBox xmlns="http://javafx.com/javafx"
@@ -20,7 +20,7 @@
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
                 <Label text="Topics" styleClass="section-title"/>
-                <ListView fx:id="shelvesList" prefHeight="400"/>
+                <ListView fx:id="topicsList" prefHeight="400"/>
                 <HBox spacing="8">
                     <Button text="Add" />
                     <Button text="Change name"  fx:id="renameBtn"/>
